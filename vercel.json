@@ -1,0 +1,16 @@
+{
+  "trailingSlash": false,
+  "rewrites": [
+    { "source": "/p/:slug", "destination": "/p/:slug.html" },
+    { "source": "/p/what-does-the-sparksphear-team-resarch", "destination": "/p/what-does-the-sparksphear-team-about", "statusCode": 308 }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        { "key": "X-Content-Type-Options", "value": "nosniff" },
+        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" }
+      ]
+    }
+  ]
+}

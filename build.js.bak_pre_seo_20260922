@@ -1,0 +1,138 @@
+// Static site generator for sparkspheartechsolutions.blog
+// Builds from writizzy_content_export.json (14 posts, full markdown)
+const fs = require('fs');
+const path = require('path');
+
+const bundle = JSON.parse(fs.readFileSync('C:/Users/shaza/writizzy_content_export.json', 'utf8'));
+const OUT = path.join(__dirname, 'public');
+const TITLE = 'SPARKSPHEAR FIELD NOTES';
+const TAGLINE = 'Research the pain. Choose the tool. Build the system.';
+const DESC = 'Practical research on business systems, software decisions, and AI automation for owner-led service businesses. Learn what to fix and what to automate.';
+
+// Minimal markdown -> HTML (headings, paragraphs, lists, bold, links, code, blockquote, hr)
+function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+function inline(s){
+  s = esc(s);
+  s = s.replace(/`([^`]+)`/g, '<code>$1</code>');
+  s = s.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+  s = s.replace(/\*([^*]+)\*/g, '<em>$1</em>');
+  s = s.replace(/\[([^\]]+)\]\(([^)]+)\)/g, (m,t,u)=>`<a href="${u.startsWith('http')?u:'/p/'+u.replace(/^\//,'').replace(/^p\//,'')}">${t}</a>`);
+  return s;
+}
+function md2html(md){
+  const lines = md.split('\n');
+  let html = '', inList = false, inOl = false;
+  const closeLists = ()=>{ if(inList){html+='</ul>';inList=false;} if(inOl){html+='</ol>';inOl=false;} };
+  for (let i=0;i<lines.length;i++){
+    let l = lines[i];
+    if (/^\s*$/.test(l)) { closeLists(); continue; }
+    let m;
+    if ((m = l.match(/^(#{1,4})\s+(.*)/))) { closeLists(); const lv=m[1].length; html += `<h${lv}>${inline(m[2])}</h${lv}>`; continue; }
+    if (/^>\s?/.test(l)) { closeLists(); html += `<blockquote><p>${inline(l.replace(/^>\s?/,''))}</p></blockquote>`; continue; }
+    if (/^(-{3,}|\*{3,})$/.test(l.trim())) { closeLists(); html += '<hr>'; continue; }
+    if ((m = l.match(/^\s*[-*]\s+(.*)/))) { closeLists(); if(!inList){html+='<ul>';inList=true;} html += `<li>${inline(m[1])}</li>`; continue; }
+    if ((m = l.match(/^\s*(\d+)\.\s+(.*)/))) { closeLists(); if(!inOl){html+='<ol>';inOl=true;} html += `<li>${inline(m[2])}</li>`; continue; }
+    closeLists();
+    html += `<p>${inline(l)}</p>`;
+  }
+  closeLists();
+  return html;
+}
+
+const postMeta = bundle.map(p => ({
+  slug: p.slug, title: p.title, excerpt: p.excerpt || '',
+  date: p.publishedAt ? p.publishedAt.slice(0,10) : '',
+  accessMode: p.accessMode, tags: typeof p.tags === 'object' && !Array.isArray(p.tags) && p.tags ? [p.tags.name].filter(Boolean) : []
+})).sort((a,b)=>b.date.localeCompare(a.date));
+
+function layout(title, desc, body, extraHead=''){
+  return `<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>${esc(title)}</title><meta name="description" content="${esc(desc||DESC)}">
+<meta property="og:title" content="${esc(title)}"><meta property="og:description" content="${esc(desc||DESC)}">
+<meta property="og:type" content="${title===TITLE?'website':'article'}">
+<link rel="canonical" href="https://sparkspheartechsolutions.blog/${title===TITLE?'':'p/'+''}">
+${extraHead}<style>
+:root{--bg:#0d0f12;--ink:#e8e6e0;--ink2:#a8a49b;--ink3:#6f6b63;--card:#14171c;--rule:#23272e;--accent:#e07b2a;--green:#4a9c6d}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--ink);font:17px/1.7 ui-sans-serif,system-ui,-apple-system,'Segoe UI',sans-serif}
+a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+.wrap{max-width:760px;margin:0 auto;padding:0 20px}
+header{border-bottom:1px solid var(--rule);padding:20px 0}
+header .wrap{display:flex;align-items:baseline;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.brand{font-weight:800;letter-spacing:-.02em;font-size:20px;color:var(--ink)}
+.brand span{color:var(--accent)}
+nav a{color:var(--ink2);margin-left:18px;font-size:15px}
+.tagline{color:var(--ink3);font-family:ui-monospace,monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase}
+.hero{padding:48px 0 20px}
+h1.hero-h{font-size:38px;font-weight:800;letter-spacing:-.03em;line-height:1.1;margin-bottom:8px}
+.hero p{color:var(--ink2);max-width:640px}
+.grid{display:grid;gap:2px;margin:32px 0 60px}
+.post-card{background:var(--card);border:1px solid var(--rule);border-radius:12px;padding:22px 24px}
+.post-card h2{font-size:20px;letter-spacing:-.01em;margin-bottom:6px}
+.post-card h2 a{color:var(--ink)}
+.meta{color:var(--ink3);font-family:ui-monospace,monospace;font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;margin-bottom:10px;display:flex;gap:10px;flex-wrap:wrap}
+.paid{color:var(--green)}
+.excerpt{color:var(--ink2);font-size:15px}
+article{padding:40px 0 30px}
+article h1{font-size:34px;letter-spacing:-.03em;line-height:1.15;margin:20px 0 12px}
+article h2{font-size:26px;letter-spacing:-.02em;margin:40px 0 14px}
+article h3{font-size:21px;margin:32px 0 10px}
+article h4{color:var(--ink3);font-family:ui-monospace,monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;margin:28px 0 8px}
+article p{margin:0 0 20px;color:var(--ink);font-size:17px}
+article h2,article h3{color:var(--ink)}
+article ul,article ol{margin:0 0 20px 24px;color:var(--ink)}
+article li{margin-bottom:8px}
+article blockquote{border-left:3px solid var(--accent);color:var(--ink2);font-size:18px;font-style:italic;padding:4px 0 4px 20px;margin:0 0 22px}
+article code{background:var(--card);border:1px solid var(--rule);border-radius:6px;padding:.1em .4em;font-size:.88em}
+.byline{color:var(--ink3);font-family:ui-monospace,monospace;font-size:12px;letter-spacing:.08em;text-transform:uppercase;margin-bottom:8px}
+.backto{border-top:1px solid var(--rule);padding:22px 0 60px}
+footer{border-top:1px solid var(--rule);padding:30px 0 60px;color:var(--ink3);font-size:14px}
+footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
+@media(max-width:640px){h1.hero-h{font-size:30px}article h1{font-size:28px}}
+</style></head><body>
+<header><div class="wrap"><a class="brand" href="/">SPARKSPHEAR<span>&nbsp;FIELD NOTES</span></a>
+<nav><a href="/p/research">Research</a><a href="/p/industries-we-spark">Industries</a><a href="/p/what-is-the-sparksphear-team-about">About</a></nav></div></header>
+<main class="wrap">${body}</main>
+<footer><div class="wrap"><div>${esc(TAGLINE)}</div><div>© 2026 SPARKSPHEAR TECH SOLUTIONS LLC</div></div></footer>
+</body></html>`;
+}
+
+// Build homepage
+function dateFmt(d){ if(!d) return ''; const dt=new Date(d+'T00:00:00Z'); return dt.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric',timeZone:'UTC'}); }
+
+let cards = '';
+for (const p of postMeta) {
+  cards += `<div class="post-card"><div class="meta"><span>${dateFmt(p.date)}</span>${p.accessMode==='PAID'?'<span class="paid">Premium · Preview</span>':''}</div>
+<h2><a href="/p/${p.slug}">${esc(p.title)}</a></h2>
+<div class="excerpt">${esc(p.excerpt)}</div></div>`;
+}
+
+const home = layout(TITLE, DESC, `
+<section class="hero"><div class="tagline">${esc(TAGLINE)}</div>
+<h1 class="hero-h">SPARKSPHEAR FIELD NOTES</h1>
+<p>${esc(DESC)}</p></section>
+<section class="grid">${cards}</section>`);
+fs.mkdirSync(OUT, {recursive:true});
+fs.writeFileSync(path.join(OUT,'index.html'), home);
+
+// Build each post page
+for (const p of bundle) {
+  const body = md2html(p.markdown || '');
+  const paidBanner = p.accessMode === 'PAID' ? `<p style="border:1px solid var(--rule);border-radius:10px;padding:14px 18px;background:var(--card);color:var(--ink2);font-size:14px">This is a premium workbook. Only the preview is published. Full access comes with SPARKSPHEAR Side B engagements.</p>` : '';
+  const html = layout(p.title, p.excerpt || DESC, `
+<div class="byline">${dateFmt(p.publishedAt ? p.publishedAt.slice(0,10) : '')} · SPARKSPHEAR FIELD NOTES</div>
+<article>${paidBanner}${body}</article>
+<div class="backto"><a href="/">&larr; All Field Notes</a></div>`);
+  fs.mkdirSync(path.join(OUT,'p'), {recursive:true});
+  fs.writeFileSync(path.join(OUT,'p',p.slug+'.html'), html);
+}
+
+// sitemap + robots
+const urls = ['https://sparkspheartechsolutions.blog/'].concat(postMeta.map(p=>`https://sparkspheartechsolutions.blog/p/${p.slug}`));
+fs.writeFileSync(path.join(OUT,'sitemap.xml'), `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+${urls.map(u=>`<url><loc>${u}</loc></url>`).join('\n')}
+</urlset>`);
+fs.writeFileSync(path.join(OUT,'robots.txt'), 'User-agent: *\nAllow: /\nSitemap: https://sparkspheartechsolutions.blog/sitemap.xml\n');
+
+console.log('built', postMeta.length, 'posts +', fs.readdirSync(OUT).length, 'files in', OUT);
