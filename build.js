@@ -157,7 +157,17 @@ const homepageJsonLd = `<script type="application/ld+json">${JSON.stringify({
     '@context': 'https://schema.org',
     '@graph': [
       {
+        '@type': 'WebPage',
+        '@id': DOMAIN + '/#webpage',
+        'url': DOMAIN,
+        'name': 'SPARKSPHEAR Field Notes — Research the pain. Choose the tool. Build the system.',
+        'description': DESC,
+        'inLanguage': 'en-US',
+        'isPartOf': { '@id': DOMAIN + '/#website' }
+      },
+      {
         '@type': 'WebSite',
+        '@id': DOMAIN + '/#website',
         'name': 'SPARKSPHEAR Field Notes',
         'url': DOMAIN,
         'potentialAction': {
