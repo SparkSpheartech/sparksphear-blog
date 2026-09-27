@@ -10,8 +10,8 @@ const TAGLINE = 'Research the pain. Choose the tool. Build the system.';
 const DESC = 'Practical research on business systems, software decisions, and AI automation for owner-led service businesses. Learn what to fix and what to automate.';
 const DOMAIN = 'https://sparkspheartechsolutions.blog';
 const OG_IMAGE = DOMAIN + '/images/og-default.png';
-const GSC_VERIFICATION = 'gsc-placeholder-verify'; // replace with real token from GSC
-const GA4_MEASUREMENT_ID = 'G-1SHK57ERQ5'; // SparkSphearTechSolutions GA4
+const GSC_VERIFICATION = '62419175358087346175'; // replace with real token from GSC
+const GA4_MEASUREMENT_ID = 'G-3G7GT1GM5K'; // SparkSphearTechSolutions GA4
 const TITLE_MAX = 60;
 
 // Minimal markdown -> HTML (headings, paragraphs, lists, bold, links, code, blockquote, hr)
