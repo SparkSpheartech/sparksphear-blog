@@ -1,8 +1,14 @@
 {
   "trailingSlash": false,
+  "redirects": [
+    {
+      "source": "/p/what-does-the-sparksphear-team-resarch",
+      "destination": "/p/what-does-the-sparksphear-team-about",
+      "statusCode": 308
+    }
+  ],
   "rewrites": [
-    { "source": "/p/:slug", "destination": "/p/:slug.html" },
-    { "source": "/p/what-does-the-sparksphear-team-resarch", "destination": "/p/what-does-the-sparksphear-team-about", "statusCode": 308 }
+    { "source": "/p/:slug", "destination": "/p/:slug.html" }
   ],
   "headers": [
     {
