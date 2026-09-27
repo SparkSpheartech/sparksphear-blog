@@ -11,7 +11,7 @@ const DESC = 'Practical research on business systems, software decisions, and AI
 const DOMAIN = 'https://sparkspheartechsolutions.blog';
 const OG_IMAGE = DOMAIN + '/images/og-default.png';
 const GSC_VERIFICATION = 'gsc-placeholder-verify'; // replace with real token from GSC
-const GA4_MEASUREMENT_ID = 'G-XFW1TLBRQS'; // existing property
+const GA4_MEASUREMENT_ID = 'G-1SHK57ERQ5'; // SparkSphearTechSolutions GA4
 const TITLE_MAX = 60;
 
 // Minimal markdown -> HTML (headings, paragraphs, lists, bold, links, code, blockquote, hr)
