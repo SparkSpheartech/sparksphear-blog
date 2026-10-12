@@ -3,18 +3,7 @@
 <link rel="icon" href="/images/favicon.ico" type="image/x-icon"><link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
 <link rel="canonical" href="https://sparkspheartechsolutions.blog/p/caregiver-capacity-case-matching-agent">
 <meta property="og:title" content="Caregiver Capacity and Case-Matching AI Agent"><meta property="og:description" content="Home care agencies are capacity constrained, not sales constrained. How a case-matching AI agent fills unstaffed shifts, protects billable revenue, and syncs with your EHR.">
-<meta property="og:type" content="article">
-<meta name="author" content="OYNX">
-<meta property="article:author" content="https://blog.sparkspheartechsolutions.com/author/oyx">
-<meta property="article:published_time" content="2026-09-28T00:00:00+00:00">
-<meta property="article:modified_time" content="2026-10-02T00:00:00+00:00">
-<meta property="og:image" content="https://blog.sparkspheartechsolutions.com/images/caregiver-capacity-case-matching-agent.jpg">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Caregiver Capacity and Case-Matching: A Practical Agent Playbook">
-<meta name="twitter:description" content="A practical guide to using AI agents for caregiver capacity planning, case matching, scheduling, and communication in ho">
-<meta name="twitter:image" content="https://blog.sparkspheartechsolutions.com/images/caregiver-capacity-case-matching-agent.jpg"><meta property="og:url" content="https://sparkspheartechsolutions.blog/p/caregiver-capacity-case-matching-agent">
+<meta property="og:type" content="article"><meta property="og:url" content="https://sparkspheartechsolutions.blog/p/caregiver-capacity-case-matching-agent">
 <meta property="og:image" content="https://sparkspheartechsolutions.blog/images/og-default.png"><meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630"><meta property="og:image:alt" content="Caregiver Capacity and Case-Matching AI Agent">
 <meta property="og:site_name" content="SPARKSPHEAR FIELD NOTES">
@@ -92,45 +81,66 @@ nav{width:100%;justify-content:flex-start;overflow-x:auto;-webkit-overflow-scrol
 .nav-item.open .dropdown{display:block;visibility:visible;pointer-events:auto}
 .dropdown a{padding:10px 12px}}
 .skip-link{position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden;z-index:100;background:var(--accent);color:#fff;padding:8px 16px;border-radius:4px;font-size:14px}
-.skip-link:focus{left:16px;top:8px;width:auto;height:auto;overflow:visible}
+|.skip-link:focus{left:16px;top:8px;width:auto;height:auto;overflow:visible}
+|.search-wrap{position:relative;margin-left:18px;display:flex;align-items:center}
+|.search-wrap input{width:0;padding:0;border:0;border-radius:8px;background:transparent;color:var(--ink);font:inherit;transition:width .3s var(--ease),padding .3s var(--ease),border-color .3s var(--ease),background .3s var(--ease);outline:none;cursor:pointer}
+|.search-wrap input:focus,.search-wrap input.expanded{width:180px;padding:8px 12px 8px 34px;border:1px solid var(--rule);background:var(--card)}
+|.search-wrap input:focus{width:220px}
+|.search-btn{background:none;border:0;color:var(--ink2);cursor:pointer;padding:4px;margin-right:6px;display:flex;align-items:center;transition:color .18s var(--ease)}
+|.search-btn:hover{color:var(--ink)}
+|.search-results{position:absolute;top:100%;right:0;margin-top:8px;width:320px;max-height:360px;overflow-y:auto;background:var(--card);border:1px solid var(--rule);border-radius:12px;box-shadow:0 8px 24px rgba(0,0,0,.4);display:none;z-index:100}
+|.search-results.visible{display:block}
+|.search-results a{display:flex;flex-direction:column;padding:12px 16px;border-bottom:1px solid var(--rule);color:var(--ink);text-decoration:none;transition:background .15s var(--ease)}
+|.search-results a:last-child{border-bottom:none}
+|.search-results a:hover{background:rgba(224,123,42,.08)}
+|.search-results .sr-title{font-size:14px;font-weight:600;margin-bottom:2px}
+|.search-results .sr-date{font-size:11px;color:var(--ink3);font-family:ui-monospace,monospace}
+|.search-no-results{padding:16px;color:var(--ink3);font-size:14px;text-align:center}
+|.newsletter{background:var(--card);border:1px solid var(--rule);border-radius:14px;padding:24px 28px;margin:32px 0}
+|.newsletter h3{font-size:18px;margin-bottom:6px;color:var(--ink)}
+|.newsletter p{color:var(--ink2);font-size:14px;margin-bottom:14px}
+|.newsletter form{display:flex;gap:8px;flex-wrap:wrap}
+|.newsletter input[type="email"]{flex:1;min-width:180px;padding:10px 14px;border:1px solid var(--rule);border-radius:8px;background:var(--bg);color:var(--ink);font:inherit;font-size:14px;outline:none}
+|.newsletter input[type="email"]:focus{border-color:var(--accent)}
+|.newsletter button{padding:10px 20px;background:var(--accent);color:#fff;border:0;border-radius:8px;font:inherit;font-size:14px;font-weight:600;cursor:pointer;transition:opacity .18s var(--ease)}
+|.newsletter button:hover{opacity:.9}
+|.newsletter .nf-status{font-size:13px;margin-top:8px;min-height:20px}
+|.nf-success{color:var(--green)}
+|.nf-error{color:#d45656}
+|.toc-wrap{background:var(--card);border:1px solid var(--rule);border-radius:12px;padding:18px 22px;margin:0 0 32px}
+|.toc-toggle{background:none;border:0;color:var(--ink2);cursor:pointer;font:inherit;font-size:14px;display:flex;align-items:center;gap:6px;padding:4px 0;transition:color .18s var(--ease)}
+|.toc-toggle:hover{color:var(--ink)}
+|.toc-toggle .chev-sm{display:inline-block;transition:transform .2s var(--ease);font-size:12px}
+|.toc-toggle.open .chev-sm{transform:rotate(90deg)}
+|.toc-list{list-style:none;padding:8px 0 0 8px;display:none}
+|.toc-list.open{display:block}
+|.toc-list li{margin-bottom:4px}
+|.toc-list a{color:var(--ink2);font-size:14px;padding:4px 0 4px 12px;border-left:2px solid var(--rule);display:block;transition:color .18s var(--ease),border-color .18s var(--ease)}
+|.toc-list a:hover{color:var(--accent);border-color:var(--accent)}
+|.toc-list li.toc-h3 a{padding-left:28px;font-size:13px}
+|.social-links{display:flex;gap:16px;align-items:center}
+|.social-links a{color:var(--ink3);transition:color .18s var(--ease);display:flex;align-items:center}
+|.social-links a:hover{color:var(--accent)}
+|@media(max-width:640px){h1.hero-h{font-size:30px}article h1{font-size:28px}
+|.newsletter form{flex-direction:column}
+|.newsletter input[type="email"]{min-width:100%}
+|.newsletter button{width:100%}
+|.search-wrap input:focus,.search-wrap input.expanded{width:140px}
+|.search-wrap input:focus{width:160px}
+|.search-results{width:calc(100vw - 40px);right:-10px}
+|}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition-duration:.01ms!important}html{scroll-behavior:auto}}
 @media(prefers-reduced-transparency:reduce){header{background:var(--bg);-webkit-backdrop-filter:none;backdrop-filter:none}}
-</style><script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "Article",
-  "headline": "Caregiver Capacity and Case-Matching: A Practical Agent Playbook",
-  "description": "A practical guide to using AI agents for caregiver capacity planning, case matching, scheduling, and communication in home care agencies.",
-  "image": "https://blog.sparkspheartechsolutions.com/images/caregiver-capacity-case-matching-agent.jpg",
-  "author": {
-    "@type": "Person",
-    "name": "OYNX"
-  },
-  "publisher": {
-    "@type": "Organization",
-    "name": "SparkSphear Tech Solutions",
-    "logo": {
-      "@type": "ImageObject",
-      "url": "https://blog.sparkspheartechsolutions.com/logo.png"
-    }
-  },
-  "datePublished": "2026-09-28",
-  "dateModified": "2026-10-02",
-  "mainEntityOfPage": {
-    "@type": "WebPage",
-    "@id": "https://blog.sparkspheartechsolutions.com/p/caregiver-capacity-case-matching-agent"
-  }
-}
-</script>
-</head><body>
+</style></head><body>
 <a class="skip-link" href="#main-content">Skip to content</a>
 <header id="site-header"><div class="wrap"><a class="brand" href="/">SPARKSPHEAR<span>&nbsp;FIELD NOTES</span></a>
-<nav aria-label="Primary"><a class="nav-link" href="/p/research">Research</a><div class="nav-item"><button class="nav-link" type="button" aria-expanded="false" aria-haspopup="true" aria-controls="industries-menu">Industries<span class="chev" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 3.5 5 6.5 8 3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button><div class="dropdown" id="industries-menu" role="menu" aria-label="Industries"><div class="dd-label">Industries</div><a role="menuitem" href="/p/industries-we-spark">All Industries</a><div class="dd-sep"></div><a role="menuitem" href="/p/industries-we-spark#barbershops-and-salons">Barbershop<span class="dd-count">9 guides</span></a><a role="menuitem" href="/p/caregiver-capacity-case-matching-agent">Home Health Care<span class="dd-flag">↗</span></a><a role="menuitem" href="/p/research">Research &amp; Evaluations</a></div></div><a class="nav-link" href="/p/what-is-the-sparksphear-team-about">About</a><a class="nav-link" href="/p/what-does-the-sparksphear-team-about">Start Here</a></nav></div></header>
+<nav aria-label="Primary"><a class="nav-link" href="/p/research">Research</a><div class="nav-item"><button class="nav-link" type="button" aria-expanded="false" aria-haspopup="true" aria-controls="industries-menu">Industries<span class="chev" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 3.5 5 6.5 8 3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button><div class="dropdown" id="industries-menu" role="menu" aria-label="Industries"><div class="dd-label">Industries</div><a role="menuitem" href="/p/industries-we-spark">All Industries</a><div class="dd-sep"></div><a role="menuitem" href="/p/industries-we-spark#barbershops-and-salons">Barbershop<span class="dd-count">9 guides</span></a><a role="menuitem" href="/p/caregiver-capacity-case-matching-agent">Home Health Care<span class="dd-flag">↗</span></a><a role="menuitem" href="/p/research">Research &amp; Evaluations</a></div></div><a class="nav-link" href="/p/what-is-the-sparksphear-team-about">About</a><a class="nav-link" href="/p/what-does-the-sparksphear-team-about">Start Here</a><div class="search-wrap"><button class="search-btn" type="button" aria-label="Search" title="Search"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></button><input type="search" id="search-input" placeholder="Search articles…" aria-label="Search"><div class="search-results" id="search-results"></div></div></nav></div></header>
 <main id="main-content" class="wrap">
 <div class="byline">Sep 30, 2026 · SPARKSPHEAR FIELD NOTES</div>
-<article><p>Home care agencies almost never lose revenue because not enough clients came in. They lose it because the clients already there cannot be served. The sales pipeline is fine. The schedule is not.</p><p>Open shifts pile up faster than the office can cover them. A caregiver calls out at six in the morning. A new case needs a start date and nobody with the right certification is free that day. A client prefers a caregiver who speaks their language and the assignment keeps getting missed. Every one of those gaps is a shift that cannot be billed. For a mid-size agency, unstaffed shifts leave tens of thousands of dollars in billable revenue on the table every month, not because the demand is missing but because the matching is too slow and too manual.</p><p>This is the problem a caregiver capacity and case-matching agent exists to solve.</p><h2 id="the-core-idea-middleware-not-another-dashboard">The core idea: middleware, not another dashboard</h2><p>The agent does not replace your EHR or your scheduling software. It sits between your existing systems as an intelligent middleware layer connecting three things:</p><ol><li>Your EHR and scheduling platform, which knows the shifts, the cases, and the caregiver records</li></ol><ol><li>A mapping service, which knows real drive times and distances</li></ol><ol><li>A messaging gateway, which knows how to reach a caregiver on their phone in under a minute</li></ol><p>When an open shift appears, the agent reads the requirement, checks who can actually take it, contacts the right few people directly, and writes the result back into the schedule. The office staff stop being switchboard operators and start handling only the exceptions.</p><h2 id="what-the-agent-reads">What the agent reads</h2><p>The matching is only as good as the inputs. The agent pulls three streams of data continuously.</p><p><strong>Shift and case requirements from the EHR.</strong> Client location and geocode, shift timing, required skills such as dementia care experience, hoyer lift certification, or memory care training, and client preferences like preferred caregiver gender, non-smoker, or language match.</p><p><strong>Caregiver profile and state data from HR and the EHR.</strong> Active certifications and licenses, the shift availability matrix, maximum weekly hour caps so unapproved overtime never happens, home address for drive-time math, and any client exclusion history that rules a pairing out.</p><p><strong>Real-time GPS and EVV feeds.</strong> Where active caregivers are right now, and exception triggers from electronic visit verification when a clock-in is late or a visit looks like a no-show.</p><p><strong>Interactive inbound responses.</strong> When a caregiver replies to a shift offer, the accept or decline comes back into the agent and drives the next action immediately.</p><h2 id="what-the-agent-does">What the agent does</h2><p>Four outbound actions do the heavy lifting.</p><p><strong>Targeted shift broadcasts.</strong> Instead of spamming the whole team with a blast text, the agent offers the shift to the top three to five qualified caregivers nearest the client, ranked by skills, drive time, and availability. Fewer messages, faster answers, no notification fatigue.</p><p><strong>EHR auto-assignment.</strong> The first qualified caregiver to claim the shift is written straight into the schedule and the shift is locked, which prevents double-booking and removes the race condition between two coordinators editing the same calendar.</p><p><strong>Caregiver shift itinerary.</strong> The confirmed caregiver gets shift details, client care plan summaries, and a direct navigation link so they leave on time with everything they need.</p><p><strong>Margin and overtime safeguards.</strong> Before an assignment is locked, the agent calculates the wage-to-rate spread and confirms it lands in the target 35 to 42 percent gross margin band. It respects weekly hour caps, so a convenient match never quietly pushes a caregiver into unapproved overtime.</p><p>And when the loop fails, it escalates. If a shift is still unassigned 30 minutes before start, the supervisor or office scheduler gets an alert on the channel they actually watch, whether that is Slack, Teams, or SMS, with the shift details and the match attempts already tried.</p><h2 id="the-integrations-behind-it">The integrations behind it</h2><p>The agent connects through public APIs the agency already pays for.</p><ul><li><strong>EHR and scheduling:</strong> REST APIs such as Ankota, WellSky and ClearCare, AlayaCare, and HHAExchange, to read shift requirements and write schedule updates</li></ul><ul><li><strong>Messaging:</strong> Twilio SMS for two-way shift claims, so a caregiver can reply YES to claim a shift from the lock screen, or native app push where an agency runs its own mobile app</li></ul><ul><li><strong>Mapping:</strong> Google Maps Distance Matrix or Mapbox for live drive times, traffic, and mileage</li></ul><ul><li><strong>EVV:</strong> the electronic visit verification feed, to catch late clock-ins and missed shifts the moment they happen instead of at payroll</li></ul><h2 id="the-flow-end-to-end">The flow, end to end</h2><p>A shift opens in the EHR. The matching engine scores every caregiver against skills, GPS position, and drive time. The top three to five get an SMS offer. A caregiver replies YES. The EHR schedule updates and the shift locks. The caregiver gets their itinerary and navigation link. EVV confirms the clock-in.</p><p>The entire cycle runs in minutes, without a coordinator touching the schedule, and every step is logged for review.</p><h2 id="what-it-is-worth">What it is worth</h2><p>The direct return is recovered billable hours: shifts that used to go uncovered now fill before the start time. The secondary returns compound: coordinators spend their day on exceptions instead of cold-calling a caregiver list, margin stops leaking on badly priced assignments, and overtime stops accruing on shifts that a closer, cheaper match could have covered.</p><p>If your agency turns down cases you could have served, the constraint is not demand. It is matching speed. That is a systems problem, and systems problems are solvable.</p></article>
+<div class="toc-wrap"><button class="toc-toggle" type="button" aria-expanded="false" aria-controls="toc-content"><span class="chev-sm" aria-hidden="true">▶</span> Table of Contents</button><ul class="toc-list" id="toc-content"><li class="toc-h2"><a href="#the-core-idea-middleware-not-another-dashboard">The core idea: middleware, not another dashboard</a></li><li class="toc-h2"><a href="#what-the-agent-reads">What the agent reads</a></li><li class="toc-h2"><a href="#what-the-agent-does">What the agent does</a></li><li class="toc-h2"><a href="#the-integrations-behind-it">The integrations behind it</a></li><li class="toc-h2"><a href="#the-flow-end-to-end">The flow, end to end</a></li><li class="toc-h2"><a href="#what-it-is-worth">What it is worth</a></li></ul></div><article id="article-content"><p>Home care agencies almost never lose revenue because not enough clients came in. They lose it because the clients already there cannot be served. The sales pipeline is fine. The schedule is not.</p><p>Open shifts pile up faster than the office can cover them. A caregiver calls out at six in the morning. A new case needs a start date and nobody with the right certification is free that day. A client prefers a caregiver who speaks their language and the assignment keeps getting missed. Every one of those gaps is a shift that cannot be billed. For a mid-size agency, unstaffed shifts leave tens of thousands of dollars in billable revenue on the table every month, not because the demand is missing but because the matching is too slow and too manual.</p><p>This is the problem a caregiver capacity and case-matching agent exists to solve.</p><h2 id="the-core-idea-middleware-not-another-dashboard">The core idea: middleware, not another dashboard</h2><p>The agent does not replace your EHR or your scheduling software. It sits between your existing systems as an intelligent middleware layer connecting three things:</p><ol><li>Your EHR and scheduling platform, which knows the shifts, the cases, and the caregiver records</li></ol><ol><li>A mapping service, which knows real drive times and distances</li></ol><ol><li>A messaging gateway, which knows how to reach a caregiver on their phone in under a minute</li></ol><p>When an open shift appears, the agent reads the requirement, checks who can actually take it, contacts the right few people directly, and writes the result back into the schedule. The office staff stop being switchboard operators and start handling only the exceptions.</p><h2 id="what-the-agent-reads">What the agent reads</h2><p>The matching is only as good as the inputs. The agent pulls three streams of data continuously.</p><p><strong>Shift and case requirements from the EHR.</strong> Client location and geocode, shift timing, required skills such as dementia care experience, hoyer lift certification, or memory care training, and client preferences like preferred caregiver gender, non-smoker, or language match.</p><p><strong>Caregiver profile and state data from HR and the EHR.</strong> Active certifications and licenses, the shift availability matrix, maximum weekly hour caps so unapproved overtime never happens, home address for drive-time math, and any client exclusion history that rules a pairing out.</p><p><strong>Real-time GPS and EVV feeds.</strong> Where active caregivers are right now, and exception triggers from electronic visit verification when a clock-in is late or a visit looks like a no-show.</p><p><strong>Interactive inbound responses.</strong> When a caregiver replies to a shift offer, the accept or decline comes back into the agent and drives the next action immediately.</p><h2 id="what-the-agent-does">What the agent does</h2><p>Four outbound actions do the heavy lifting.</p><p><strong>Targeted shift broadcasts.</strong> Instead of spamming the whole team with a blast text, the agent offers the shift to the top three to five qualified caregivers nearest the client, ranked by skills, drive time, and availability. Fewer messages, faster answers, no notification fatigue.</p><p><strong>EHR auto-assignment.</strong> The first qualified caregiver to claim the shift is written straight into the schedule and the shift is locked, which prevents double-booking and removes the race condition between two coordinators editing the same calendar.</p><p><strong>Caregiver shift itinerary.</strong> The confirmed caregiver gets shift details, client care plan summaries, and a direct navigation link so they leave on time with everything they need.</p><p><strong>Margin and overtime safeguards.</strong> Before an assignment is locked, the agent calculates the wage-to-rate spread and confirms it lands in the target 35 to 42 percent gross margin band. It respects weekly hour caps, so a convenient match never quietly pushes a caregiver into unapproved overtime.</p><p>And when the loop fails, it escalates. If a shift is still unassigned 30 minutes before start, the supervisor or office scheduler gets an alert on the channel they actually watch, whether that is Slack, Teams, or SMS, with the shift details and the match attempts already tried.</p><h2 id="the-integrations-behind-it">The integrations behind it</h2><p>The agent connects through public APIs the agency already pays for.</p><ul><li><strong>EHR and scheduling:</strong> REST APIs such as Ankota, WellSky and ClearCare, AlayaCare, and HHAExchange, to read shift requirements and write schedule updates</li></ul><ul><li><strong>Messaging:</strong> Twilio SMS for two-way shift claims, so a caregiver can reply YES to claim a shift from the lock screen, or native app push where an agency runs its own mobile app</li></ul><ul><li><strong>Mapping:</strong> Google Maps Distance Matrix or Mapbox for live drive times, traffic, and mileage</li></ul><ul><li><strong>EVV:</strong> the electronic visit verification feed, to catch late clock-ins and missed shifts the moment they happen instead of at payroll</li></ul><h2 id="the-flow-end-to-end">The flow, end to end</h2><p>A shift opens in the EHR. The matching engine scores every caregiver against skills, GPS position, and drive time. The top three to five get an SMS offer. A caregiver replies YES. The EHR schedule updates and the shift locks. The caregiver gets their itinerary and navigation link. EVV confirms the clock-in.</p><p>The entire cycle runs in minutes, without a coordinator touching the schedule, and every step is logged for review.</p><h2 id="what-it-is-worth">What it is worth</h2><p>The direct return is recovered billable hours: shifts that used to go uncovered now fill before the start time. The secondary returns compound: coordinators spend their day on exceptions instead of cold-calling a caregiver list, margin stops leaking on badly priced assignments, and overtime stops accruing on shifts that a closer, cheaper match could have covered.</p><p>If your agency turns down cases you could have served, the constraint is not demand. It is matching speed. That is a systems problem, and systems problems are solvable.</p></article>
+<section class="newsletter"><h3>Stay in the loop</h3><p>Get a weekly digest of the latest SPARKSPHEAR Field Notes. No spam, just insights.</p><form><input type="email" placeholder="you@example.com" aria-label="Your email" required><button type="submit">Subscribe</button></form><div class="nf-status"></div></section>
 <div class="backto"><a href="/">&larr; All Field Notes</a></div></main>
-<footer><div class="wrap"><div>Research the pain. Choose the tool. Build the system.</div><div>© 2026 SPARKSPHEAR TECH SOLUTIONS LLC</div></div></footer>
+<footer><div class="wrap"><div><div style="margin-bottom:8px">Research the pain. Choose the tool. Build the system.</div><div class="social-links"><a href="https://linkedin.com/company/sparksphear" target="_blank" rel="noopener noreferrer" title="LinkedIn" aria-label="LinkedIn"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M20.5 2h-17A1.5 1.5 0 002 3.5v17A1.5 1.5 0 003.5 22h17a1.5 1.5 0 001.5-1.5v-17A1.5 1.5 0 0020.5 2zM8 19H5v-9h3zM6.5 8.25A1.75 1.75 0 118.3 6.5a1.78 1.78 0 01-1.8 1.75zM19 19h-3v-4.74c0-1.42-.6-1.93-1.38-1.93A1.74 1.74 0 0013 14.19a.66.66 0 000 .14V19h-3v-9h2.9v1.3a3.11 3.11 0 012.7-1.4c1.55 0 3.36.86 3.36 3.66z"/></svg></a><a href="https://x.com/sparksphear" target="_blank" rel="noopener noreferrer" title="X (Twitter)" aria-label="X (Twitter)"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a><a href="https://youtube.com/@sparksphear" target="_blank" rel="noopener noreferrer" title="YouTube" aria-label="YouTube"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M23.5 6.2a3 3 0 00-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 00.5 6.2 31.4 31.4 0 000 12a31.4 31.4 0 00.5 5.8 3 3 0 002.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 002.1-2.1A31.4 31.4 0 0024 12a31.4 31.4 0 00-.5-5.8zM9.6 15.6V8.4l6.3 3.6-6.3 3.6z"/></svg></a></div></div><div>© 2026 SPARKSPHEAR TECH SOLUTIONS LLC</div></div></footer>
 <script>(function(){
 var header=document.getElementById('site-header');
 var onScroll=function(){header.classList.toggle('scrolled',window.scrollY>8)};
@@ -149,6 +159,103 @@ dd.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function
 var path=location.pathname;
 document.querySelectorAll('nav a.nav-link').forEach(function(a){var h=a.getAttribute('href').split('#')[0];if(h&&h===path)a.classList.add('active')});
 if(path.indexOf('/p/industries-we-spark')===0||path.indexOf('/p/caregiver-capacity-case-matching-agent')===0||/barbershop/.test(path)){btn.classList.add('active')}
+})();
+// Search functionality
+(function(){
+var input=document.getElementById('search-input');
+var results=document.getElementById('search-results');
+var searchBtn=document.querySelector('.search-btn');
+if(!input||!results)return;
+var postList=[{"slug":"caregiver-capacity-case-matching-agent","title":"Caregiver Capacity and Case-Matching AI Agent","date":"2026-09-30"},{"slug":"barbershop-cash-flow-recordkeeping-expenses","title":"How Barbers Can Track Cash Flow, Taxes, and Business Expenses","date":"2026-08-13"},{"slug":"barbershop-client-retention-prebooking-follow-up","title":"How to Improve Barbershop Client Retention: Prebooking and Follow-Up","date":"2026-08-13"},{"slug":"barbershop-front-desk-pos-inventory-checkout","title":"How to Improve Barbershop Front-Desk Operations: POS, Inventory, and Checkout","date":"2026-08-13"},{"slug":"barbershop-launch-planning-demographics-capital","title":"How to Plan a Barbershop Launch: Demographics, Space, and Capital","date":"2026-08-13"},{"slug":"barbershop-volume-trap-scheduling-burnout","title":"How to Escape the Barbershop Volume Trap: Scheduling and Pricing Without Burnout","date":"2026-08-13"},{"slug":"fix-barbershop-pricing-stagnation-capacity-costs","title":"How to Fix Barbershop Pricing Stagnation: Capacity, Costs, and Testing","date":"2026-08-13"},{"slug":"reduce-barbershop-wait-times-walk-ins-booking","title":"How to Reduce Barbershop Wait Times: Walk-Ins, Booking, and Capacity","date":"2026-08-13"},{"slug":"standardize-barbershop-client-experience-service-sops","title":"How to Standardize the Barbershop Client Experience: Consultations, Hygiene, and Service SOPs","date":"2026-08-13"},{"slug":"stop-discounting-barbershop-pricing-brand-plan","title":"How to Stop Discounting at Your Barbershop: A Practical Pricing and Brand Plan","date":"2026-08-13"},{"slug":"small-business-systems-starter-kit","title":"Small Business Systems Starter Kit: Automation Readiness & ROI Workbook","date":"2026-08-11"},{"slug":"industries-we-spark","title":"Industries We Cover","date":"2026-08-10"},{"slug":"research","title":"Research at SPARKSPHEAR Field Notes","date":"2026-08-10"},{"slug":"what-does-the-sparksphear-team-about","title":"Start Here: How SPARKSPHEAR Field Notes Works","date":"2026-08-10"},{"slug":"what-is-the-sparksphear-team-about","title":"About SPARKSPHEAR Field Notes","date":"2026-08-10"}];
+var debounceTimer=null;
+function showResults(list){
+if(!list.length){results.innerHTML='<div class="search-no-results">No articles found</div>';results.classList.add('visible');return;}
+results.innerHTML=list.map(p=>{
+var d=p.date?new Date(p.date+'T00:00:00Z').toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric',timeZone:'UTC'}):'';
+return'<a href="/p/'+p.slug+'"><span class="sr-title">'+p.title+'</span>'+(d?'<span class="sr-date">'+d+'</span>':'')+'</a>';
+}).join('');
+results.classList.add('visible');
+}
+function doSearch(q){
+if(!q||q.length<2){results.classList.remove('visible');results.innerHTML='';return;}
+var lower=q.toLowerCase();
+var matches=postList.filter(function(p){
+return p.title.toLowerCase().includes(lower)||('/p/'+p.slug).toLowerCase().includes(lower);
+});
+showResults(matches);
+}
+if(searchBtn)searchBtn.addEventListener('click',function(e){
+e.stopPropagation();
+input.classList.toggle('expanded');
+if(input.classList.contains('expanded')){input.focus();}else{input.value='';results.classList.remove('visible');results.innerHTML='';}
+});
+input.addEventListener('input',function(){
+clearTimeout(debounceTimer);
+debounceTimer=setTimeout(function(){doSearch(input.value.trim());},200);
+});
+input.addEventListener('focus',function(){
+if(input.value.trim().length>=2)input.classList.add('expanded');
+});
+document.addEventListener('click',function(e){
+if(!input.contains(e.target)&&!results.contains(e.target)&&!searchBtn.contains(e.target)){
+input.classList.remove('expanded');
+results.classList.remove('visible');
+}
+});
+document.addEventListener('keydown',function(e){
+if(e.key==='Escape'){
+input.classList.remove('expanded');
+results.classList.remove('visible');
+}
+});
+})();
+// TOC toggle
+(function(){
+var toggles=document.querySelectorAll('.toc-toggle');
+toggles.forEach(function(btn){
+var list=btn.nextElementSibling;
+if(!list)return;
+btn.addEventListener('click',function(e){
+e.preventDefault();
+var expanded=btn.getAttribute('aria-expanded')==='true';
+btn.setAttribute('aria-expanded',!expanded?'true':'false');
+list.classList.toggle('open');
+});
+});
+})();
+// Newsletter form handler
+(function(){
+var forms=document.querySelectorAll('.newsletter form');
+if(!forms.length)return;
+forms.forEach(function(form){
+form.addEventListener('submit',function(e){
+e.preventDefault();
+var email=form.querySelector('input[type="email"]');
+var btn=form.querySelector('button');
+var status=form.nextElementSibling;
+if(!email||!btn||!status)return;
+var emailVal=email.value.trim();
+if(!emailVal){status.textContent='Please enter your email.';status.className='nf-status nf-error';return;}
+btn.disabled=true;btn.textContent='Subscribing…';status.textContent='';
+try{
+fetch('https://api.sequenzy.com/newsletter/subscribe',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:emailVal,source:'sparksphear-field-notes'})}).then(function(resp){
+return resp.json();
+}).then(function(data){
+if(data.success||data.ok||data.subscribed||resp.ok){
+status.textContent='You're in! Check your inbox for a confirmation.';status.className='nf-status nf-success';
+email.value='';
+}else{
+status.textContent=data.message||'Something went wrong. Please try again.';status.className='nf-status nf-error';
+}
+}).catch(function(){
+status.textContent='Connection error. Please try again later.';status.className='nf-status nf-error';
+}).finally(function(){btn.disabled=false;btn.textContent='Subscribe';});
+}catch(err){
+status.textContent='Something went wrong. Please try again.';status.className='nf-status nf-error';
+btn.disabled=false;btn.textContent='Subscribe';
+}
+});
+});
 })();
 </script>
 </body></html>

@@ -14,6 +14,16 @@ const GSC_VERIFICATION = '62419175358087346175'; // replace with real token from
 const GA4_MEASUREMENT_ID = 'G-3G7GT1GM5K'; // SparkSphearTechSolutions GA4
 const TITLE_MAX = 60;
 
+// Social media URLs for the blog
+const SOCIAL_LINKS = [
+  { label: 'LinkedIn', url: 'https://linkedin.com/company/sparksphear', icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M20.5 2h-17A1.5 1.5 0 002 3.5v17A1.5 1.5 0 003.5 22h17a1.5 1.5 0 001.5-1.5v-17A1.5 1.5 0 0020.5 2zM8 19H5v-9h3zM6.5 8.25A1.75 1.75 0 118.3 6.5a1.78 1.78 0 01-1.8 1.75zM19 19h-3v-4.74c0-1.42-.6-1.93-1.38-1.93A1.74 1.74 0 0013 14.19a.66.66 0 000 .14V19h-3v-9h2.9v1.3a3.11 3.11 0 012.7-1.4c1.55 0 3.36.86 3.36 3.66z"/></svg>' },
+  { label: 'X (Twitter)', url: 'https://x.com/sparksphear', icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>' },
+  { label: 'YouTube', url: 'https://youtube.com/@sparksphear', icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M23.5 6.2a3 3 0 00-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 00.5 6.2 31.4 31.4 0 000 12a31.4 31.4 0 00.5 5.8 3 3 0 002.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 002.1-2.1A31.4 31.4 0 0024 12a31.4 31.4 0 00-.5-5.8zM9.6 15.6V8.4l6.3 3.6-6.3 3.6z"/></svg>' }
+];
+
+// Sequenzy newsletter endpoint
+const NEWSLETTER_ENDPOINT = 'https://api.sequenzy.com/newsletter/subscribe';
+
 // Minimal markdown -> HTML (headings, paragraphs, lists, bold, links, code, blockquote, hr)
 function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
 function inline(s){
@@ -164,15 +174,62 @@ nav{width:100%;justify-content:flex-start;overflow-x:auto;-webkit-overflow-scrol
 .nav-item.open .dropdown{display:block;visibility:visible;pointer-events:auto}
 .dropdown a{padding:10px 12px}}
 .skip-link{position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden;z-index:100;background:var(--accent);color:#fff;padding:8px 16px;border-radius:4px;font-size:14px}
-.skip-link:focus{left:16px;top:8px;width:auto;height:auto;overflow:visible}
+|.skip-link:focus{left:16px;top:8px;width:auto;height:auto;overflow:visible}
+|.search-wrap{position:relative;margin-left:18px;display:flex;align-items:center}
+|.search-wrap input{width:0;padding:0;border:0;border-radius:8px;background:transparent;color:var(--ink);font:inherit;transition:width .3s var(--ease),padding .3s var(--ease),border-color .3s var(--ease),background .3s var(--ease);outline:none;cursor:pointer}
+|.search-wrap input:focus,.search-wrap input.expanded{width:180px;padding:8px 12px 8px 34px;border:1px solid var(--rule);background:var(--card)}
+|.search-wrap input:focus{width:220px}
+|.search-btn{background:none;border:0;color:var(--ink2);cursor:pointer;padding:4px;margin-right:6px;display:flex;align-items:center;transition:color .18s var(--ease)}
+|.search-btn:hover{color:var(--ink)}
+|.search-results{position:absolute;top:100%;right:0;margin-top:8px;width:320px;max-height:360px;overflow-y:auto;background:var(--card);border:1px solid var(--rule);border-radius:12px;box-shadow:0 8px 24px rgba(0,0,0,.4);display:none;z-index:100}
+|.search-results.visible{display:block}
+|.search-results a{display:flex;flex-direction:column;padding:12px 16px;border-bottom:1px solid var(--rule);color:var(--ink);text-decoration:none;transition:background .15s var(--ease)}
+|.search-results a:last-child{border-bottom:none}
+|.search-results a:hover{background:rgba(224,123,42,.08)}
+|.search-results .sr-title{font-size:14px;font-weight:600;margin-bottom:2px}
+|.search-results .sr-date{font-size:11px;color:var(--ink3);font-family:ui-monospace,monospace}
+|.search-no-results{padding:16px;color:var(--ink3);font-size:14px;text-align:center}
+|.newsletter{background:var(--card);border:1px solid var(--rule);border-radius:14px;padding:24px 28px;margin:32px 0}
+|.newsletter h3{font-size:18px;margin-bottom:6px;color:var(--ink)}
+|.newsletter p{color:var(--ink2);font-size:14px;margin-bottom:14px}
+|.newsletter form{display:flex;gap:8px;flex-wrap:wrap}
+|.newsletter input[type="email"]{flex:1;min-width:180px;padding:10px 14px;border:1px solid var(--rule);border-radius:8px;background:var(--bg);color:var(--ink);font:inherit;font-size:14px;outline:none}
+|.newsletter input[type="email"]:focus{border-color:var(--accent)}
+|.newsletter button{padding:10px 20px;background:var(--accent);color:#fff;border:0;border-radius:8px;font:inherit;font-size:14px;font-weight:600;cursor:pointer;transition:opacity .18s var(--ease)}
+|.newsletter button:hover{opacity:.9}
+|.newsletter .nf-status{font-size:13px;margin-top:8px;min-height:20px}
+|.nf-success{color:var(--green)}
+|.nf-error{color:#d45656}
+|.toc-wrap{background:var(--card);border:1px solid var(--rule);border-radius:12px;padding:18px 22px;margin:0 0 32px}
+|.toc-toggle{background:none;border:0;color:var(--ink2);cursor:pointer;font:inherit;font-size:14px;display:flex;align-items:center;gap:6px;padding:4px 0;transition:color .18s var(--ease)}
+|.toc-toggle:hover{color:var(--ink)}
+|.toc-toggle .chev-sm{display:inline-block;transition:transform .2s var(--ease);font-size:12px}
+|.toc-toggle.open .chev-sm{transform:rotate(90deg)}
+|.toc-list{list-style:none;padding:8px 0 0 8px;display:none}
+|.toc-list.open{display:block}
+|.toc-list li{margin-bottom:4px}
+|.toc-list a{color:var(--ink2);font-size:14px;padding:4px 0 4px 12px;border-left:2px solid var(--rule);display:block;transition:color .18s var(--ease),border-color .18s var(--ease)}
+|.toc-list a:hover{color:var(--accent);border-color:var(--accent)}
+|.toc-list li.toc-h3 a{padding-left:28px;font-size:13px}
+|.social-links{display:flex;gap:16px;align-items:center}
+|.social-links a{color:var(--ink3);transition:color .18s var(--ease);display:flex;align-items:center}
+|.social-links a:hover{color:var(--accent)}
+|@media(max-width:640px){h1.hero-h{font-size:30px}article h1{font-size:28px}
+|.newsletter form{flex-direction:column}
+|.newsletter input[type="email"]{min-width:100%}
+|.newsletter button{width:100%}
+|.search-wrap input:focus,.search-wrap input.expanded{width:140px}
+|.search-wrap input:focus{width:160px}
+|.search-results{width:calc(100vw - 40px);right:-10px}
+|}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition-duration:.01ms!important}html{scroll-behavior:auto}}
 @media(prefers-reduced-transparency:reduce){header{background:var(--bg);-webkit-backdrop-filter:none;backdrop-filter:none}}
 </style></head><body>
 <a class="skip-link" href="#main-content">Skip to content</a>
 <header id="site-header"><div class="wrap"><a class="brand" href="/">SPARKSPHEAR<span>&nbsp;FIELD NOTES</span></a>
-<nav aria-label="Primary"><a class="nav-link" href="/p/research">Research</a><div class="nav-item"><button class="nav-link" type="button" aria-expanded="false" aria-haspopup="true" aria-controls="industries-menu">Industries<span class="chev" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 3.5 5 6.5 8 3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button><div class="dropdown" id="industries-menu" role="menu" aria-label="Industries"><div class="dd-label">Industries</div><a role="menuitem" href="/p/industries-we-spark">All Industries</a><div class="dd-sep"></div><a role="menuitem" href="/p/industries-we-spark#barbershops-and-salons">Barbershop<span class="dd-count">${bbCount} guides</span></a><a role="menuitem" href="/p/caregiver-capacity-case-matching-agent">Home Health Care<span class="dd-flag">↗</span></a><a role="menuitem" href="/p/research">Research &amp; Evaluations</a></div></div><a class="nav-link" href="/p/what-is-the-sparksphear-team-about">About</a><a class="nav-link" href="/p/what-does-the-sparksphear-team-about">Start Here</a></nav></div></header>
+<nav aria-label="Primary"><a class="nav-link" href="/p/research">Research</a><div class="nav-item"><button class="nav-link" type="button" aria-expanded="false" aria-haspopup="true" aria-controls="industries-menu">Industries<span class="chev" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 3.5 5 6.5 8 3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button><div class="dropdown" id="industries-menu" role="menu" aria-label="Industries"><div class="dd-label">Industries</div><a role="menuitem" href="/p/industries-we-spark">All Industries</a><div class="dd-sep"></div><a role="menuitem" href="/p/industries-we-spark#barbershops-and-salons">Barbershop<span class="dd-count">${bbCount} guides</span></a><a role="menuitem" href="/p/caregiver-capacity-case-matching-agent">Home Health Care<span class="dd-flag">↗</span></a><a role="menuitem" href="/p/research">Research &amp; Evaluations</a></div></div><a class="nav-link" href="/p/what-is-the-sparksphear-team-about">About</a><a class="nav-link" href="/p/what-does-the-sparksphear-team-about">Start Here</a><div class="search-wrap"><button class="search-btn" type="button" aria-label="Search" title="Search"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></button><input type="search" id="search-input" placeholder="Search articles…" aria-label="Search"><div class="search-results" id="search-results"></div></div></nav></div></header>
 <main id="main-content" class="wrap">${body}</main>
-<footer><div class="wrap"><div>${esc(TAGLINE)}</div><div>© 2026 SPARKSPHEAR TECH SOLUTIONS LLC</div></div></footer>
+<footer><div class="wrap"><div><div style="margin-bottom:8px">${esc(TAGLINE)}</div><div class="social-links">${SOCIAL_LINKS.map(s=>`<a href="${s.url}" target="_blank" rel="noopener noreferrer" title="${s.label}" aria-label="${s.label}">${s.icon}</a>`).join('')}</div></div><div>© 2026 SPARKSPHEAR TECH SOLUTIONS LLC</div></div></footer>
 <script>(function(){
 var header=document.getElementById('site-header');
 var onScroll=function(){header.classList.toggle('scrolled',window.scrollY>8)};
@@ -192,6 +249,103 @@ var path=location.pathname;
 document.querySelectorAll('nav a.nav-link').forEach(function(a){var h=a.getAttribute('href').split('#')[0];if(h&&h===path)a.classList.add('active')});
 if(path.indexOf('/p/industries-we-spark')===0||path.indexOf('/p/caregiver-capacity-case-matching-agent')===0||/barbershop/.test(path)){btn.classList.add('active')}
 })();
+// Search functionality
+(function(){
+var input=document.getElementById('search-input');
+var results=document.getElementById('search-results');
+var searchBtn=document.querySelector('.search-btn');
+if(!input||!results)return;
+var postList=[${postMeta.map(p=>JSON.stringify({slug:p.slug,title:p.title,date:p.date})).join(',')}];
+var debounceTimer=null;
+function showResults(list){
+if(!list.length){results.innerHTML='<div class="search-no-results">No articles found</div>';results.classList.add('visible');return;}
+results.innerHTML=list.map(p=>{
+var d=p.date?new Date(p.date+'T00:00:00Z').toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric',timeZone:'UTC'}):'';
+return'<a href="/p/'+p.slug+'"><span class="sr-title">'+p.title+'</span>'+(d?'<span class="sr-date">'+d+'</span>':'')+'</a>';
+}).join('');
+results.classList.add('visible');
+}
+function doSearch(q){
+if(!q||q.length<2){results.classList.remove('visible');results.innerHTML='';return;}
+var lower=q.toLowerCase();
+var matches=postList.filter(function(p){
+return p.title.toLowerCase().includes(lower)||('/p/'+p.slug).toLowerCase().includes(lower);
+});
+showResults(matches);
+}
+if(searchBtn)searchBtn.addEventListener('click',function(e){
+e.stopPropagation();
+input.classList.toggle('expanded');
+if(input.classList.contains('expanded')){input.focus();}else{input.value='';results.classList.remove('visible');results.innerHTML='';}
+});
+input.addEventListener('input',function(){
+clearTimeout(debounceTimer);
+debounceTimer=setTimeout(function(){doSearch(input.value.trim());},200);
+});
+input.addEventListener('focus',function(){
+if(input.value.trim().length>=2)input.classList.add('expanded');
+});
+document.addEventListener('click',function(e){
+if(!input.contains(e.target)&&!results.contains(e.target)&&!searchBtn.contains(e.target)){
+input.classList.remove('expanded');
+results.classList.remove('visible');
+}
+});
+document.addEventListener('keydown',function(e){
+if(e.key==='Escape'){
+input.classList.remove('expanded');
+results.classList.remove('visible');
+}
+});
+})();
+// TOC toggle
+(function(){
+var toggles=document.querySelectorAll('.toc-toggle');
+toggles.forEach(function(btn){
+var list=btn.nextElementSibling;
+if(!list)return;
+btn.addEventListener('click',function(e){
+e.preventDefault();
+var expanded=btn.getAttribute('aria-expanded')==='true';
+btn.setAttribute('aria-expanded',!expanded?'true':'false');
+list.classList.toggle('open');
+});
+});
+})();
+// Newsletter form handler
+(function(){
+var forms=document.querySelectorAll('.newsletter form');
+if(!forms.length)return;
+forms.forEach(function(form){
+form.addEventListener('submit',function(e){
+e.preventDefault();
+var email=form.querySelector('input[type="email"]');
+var btn=form.querySelector('button');
+var status=form.nextElementSibling;
+if(!email||!btn||!status)return;
+var emailVal=email.value.trim();
+if(!emailVal){status.textContent='Please enter your email.';status.className='nf-status nf-error';return;}
+btn.disabled=true;btn.textContent='Subscribing…';status.textContent='';
+try{
+fetch('${NEWSLETTER_ENDPOINT}',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:emailVal,source:'sparksphear-field-notes'})}).then(function(resp){
+return resp.json();
+}).then(function(data){
+if(data.success||data.ok||data.subscribed||resp.ok){
+status.textContent='You\'re in! Check your inbox for a confirmation.';status.className='nf-status nf-success';
+email.value='';
+}else{
+status.textContent=data.message||'Something went wrong. Please try again.';status.className='nf-status nf-error';
+}
+}).catch(function(){
+status.textContent='Connection error. Please try again later.';status.className='nf-status nf-error';
+}).finally(function(){btn.disabled=false;btn.textContent='Subscribe';});
+}catch(err){
+status.textContent='Something went wrong. Please try again.';status.className='nf-status nf-error';
+btn.disabled=false;btn.textContent='Subscribe';
+}
+});
+});
+})();
 </script>
 </body></html>`;
 }
@@ -204,6 +358,25 @@ for (const p of postMeta) {
   cards += `<div class="post-card"><div class="meta"><span>${dateFmt(p.date)}</span>${p.accessMode==='PAID'?'<span class="paid">Premium · Preview</span>':''}</div>
 <h2><a href="/p/${p.slug}">${esc(p.title)}</a></h2>
 <div class="excerpt">${esc(p.excerpt)}</div></div>`;
+}
+
+// Generate TOC from markdown headings
+function generateTOC(markdown) {
+  const tocItems = [];
+  const lines = (markdown || '').split('\n');
+  for (const line of lines) {
+    const h2match = line.match(/^## (.+)$/);
+    const h3match = line.match(/^### (.+)$/);
+    if (h2match || h3match) {
+      const text = (h2match ? h2match[1] : h3match[1]).trim();
+      const isH3 = !!h3match;
+      // Same ID algorithm as md2html: lowercase, non-alphanumeric → hyphen
+      const id = text.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'');
+      tocItems.push({ text, id, level: isH3 ? 'h3' : 'h2' });
+    }
+  }
+  if (tocItems.length < 3) return '';
+  return `<div class="toc-wrap"><button class="toc-toggle" type="button" aria-expanded="false" aria-controls="toc-content"><span class="chev-sm" aria-hidden="true">▶</span> Table of Contents</button><ul class="toc-list" id="toc-content">${tocItems.map(t=>`<li class="toc-${t.level}"><a href="#${t.id}">${esc(t.text)}</a></li>`).join('')}</ul></div>`;
 }
 
 const homepageJsonLd = `<script type="application/ld+json">${JSON.stringify({
@@ -239,11 +412,12 @@ const homepageJsonLd = `<script type="application/ld+json">${JSON.stringify({
     ]
   }).replace(/"undefined"/g, 'null')}</script>`;
 
-const home = layout(TITLE, DESC, `\
+const home = layout(TITLE, DESC, `
 <section class="hero"><div class="tagline">${esc(TAGLINE)}</div>
 <h1 class="hero-h">SPARKSPHEAR FIELD NOTES</h1>
 <p>${esc(DESC)}</p></section>
-<section class="grid">${cards}</section>`, '', homepageJsonLd);
+<section class="grid">${cards}</section>
+<section class="newsletter"><h3>Stay in the loop</h3><p>Get a weekly digest of the latest SPARKSPHEAR Field Notes. No spam, just insights.</p><form><input type="email" placeholder="you@example.com" aria-label="Your email" required><button type="submit">Subscribe</button></form><div class="nf-status"></div></section>`, '', homepageJsonLd);
 fs.mkdirSync(OUT, {recursive:true});
 fs.writeFileSync(path.join(OUT,'index.html'), home);
 
@@ -266,7 +440,8 @@ for (const p of bundle) {
    }).replace(/"undefined"/g, 'null')}</script>`;
    const html = layout(p.title, p.excerpt || DESC, `
 <div class="byline">${dateFmt(p.publishedAt ? p.publishedAt.slice(0,10) : '')} · SPARKSPHEAR FIELD NOTES</div>
-<article>${paidBanner}${body}</article>
+${paidBanner}${generateTOC(p.markdown || '')}<article id="article-content">${body}</article>
+<section class="newsletter"><h3>Stay in the loop</h3><p>Get a weekly digest of the latest SPARKSPHEAR Field Notes. No spam, just insights.</p><form><input type="email" placeholder="you@example.com" aria-label="Your email" required><button type="submit">Subscribe</button></form><div class="nf-status"></div></section>
 <div class="backto"><a href="/">&larr; All Field Notes</a></div>`, p.slug, jsonld);
   fs.mkdirSync(path.join(OUT,'p'), {recursive:true});
   fs.writeFileSync(path.join(OUT,'p',p.slug+'.html'), html);
