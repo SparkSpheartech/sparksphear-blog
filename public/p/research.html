@@ -14,16 +14,40 @@
 <meta name="twitter:description" content="How our comparison posts, software reviews, pricing guides, and automation playbooks help owners make better system decisions."><meta name="twitter:image" content="https://sparkspheartechsolutions.blog/images/og-default.png">
 <meta name="google-site-verification" content="62419175358087346175"><script async src="https://www.googletagmanager.com/gtag/js?id=G-3G7GT1GM5K"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-3G7GT1GM5K');</script><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"Research at SPARKSPHEAR Field Notes","description":"How our comparison posts, software reviews, pricing guides, and automation playbooks help owners make better system decisions.","datePublished":"2026-08-10","dateModified":"2026-08-10","url":"https://sparkspheartechsolutions.blog/p/research","author":{"@type":"Organization","name":"SPARKSPHEAR Field Notes"},"publisher":{"@type":"Organization","name":"SPARKSPHEAR Tech Solutions LLC","logo":{"@type":"ImageObject","url":"https://sparkspheartechsolutions.blog/images/favicon.ico"}},"image":"https://sparkspheartechsolutions.blog/images/og-default.png","mainEntityOfPage":"https://sparkspheartechsolutions.blog/p/research"}</script><style>
-:root{--bg:#0d0f12;--ink:#e8e6e0;--ink2:#a8a49b;--ink3:#6f6b63;--card:#14171c;--rule:#23272e;--accent:#e07b2a;--green:#4a9c6d}
+:root{--bg:#0d0f12;--ink:#e8e6e0;--ink2:#a8a49b;--ink3:#6f6b63;--card:#14171c;--rule:#23272e;--accent:#e07b2a;--green:#4a9c6d;--ease:cubic-bezier(.23,1,.32,1)}
 *{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:96px}
 body{background:var(--bg);color:var(--ink);font:17px/1.7 ui-sans-serif,system-ui,-apple-system,'Segoe UI',sans-serif}
 a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
 .wrap{max-width:760px;margin:0 auto;padding:0 20px}
-header{border-bottom:1px solid var(--rule);padding:20px 0}
-header .wrap{display:flex;align-items:baseline;justify-content:space-between;gap:16px;flex-wrap:wrap}
-.brand{font-weight:800;letter-spacing:-.02em;font-size:20px;color:var(--ink)}
+header{position:sticky;top:0;z-index:50;background:rgba(13,15,18,.82);-webkit-backdrop-filter:blur(14px) saturate(160%);backdrop-filter:blur(14px) saturate(160%);border-bottom:1px solid transparent;transition:border-color .25s var(--ease),background-color .25s var(--ease)}
+header.scrolled{background:rgba(13,15,18,.92);border-bottom-color:var(--rule)}
+header .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;padding-top:16px;padding-bottom:16px}
+.brand{font-weight:800;letter-spacing:-.02em;font-size:20px;color:var(--ink);transition:opacity .18s var(--ease)}
+.brand:hover{text-decoration:none;opacity:.85}
 .brand span{color:var(--accent)}
-nav a{color:var(--ink2);margin-left:18px;font-size:15px;padding:10px 0;display:inline-block}
+nav{display:flex;align-items:center}
+.nav-link{position:relative;display:inline-flex;align-items:center;gap:5px;color:var(--ink2);font-size:15px;padding:10px 2px;margin-left:18px;background:none;border:0;cursor:pointer;font:inherit;transition:color .18s var(--ease)}
+.nav-link::after{content:'';position:absolute;left:0;right:0;bottom:4px;height:2px;background:var(--accent);border-radius:2px;transform:scaleX(0);transform-origin:left;transition:transform .2s var(--ease)}
+.nav-link:hover{color:var(--ink);text-decoration:none}
+.nav-link:hover::after,.nav-link[aria-expanded="true"]::after,.nav-link.active::after{transform:scaleX(1)}
+.nav-link[aria-expanded="true"],.nav-link.active{color:var(--ink)}
+.nav-link.active{color:var(--accent)}
+.nav-link:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:4px}
+.nav-link:active{transform:scale(.97)}
+.chev{display:inline-block;transition:transform .2s var(--ease)}
+.nav-link[aria-expanded="true"] .chev{transform:rotate(180deg)}
+.dropdown{position:absolute;top:100%;left:0;margin-top:6px;min-width:250px;background:var(--card);border:1px solid var(--rule);border-radius:12px;padding:6px;box-shadow:0 12px 32px rgba(0,0,0,.45),0 2px 8px rgba(0,0,0,.3);transform-origin:top left;transform:scale(.96) translateY(-4px);opacity:0;visibility:hidden;pointer-events:none;transition:transform .18s var(--ease),opacity .18s var(--ease),visibility 0s linear .18s}
+.nav-item{position:relative;display:inline-block}
+.nav-item.open .dropdown,.dropdown:focus-within{transform:scale(1) translateY(0);opacity:1;visibility:visible;pointer-events:auto;transition:transform .18s var(--ease),opacity .18s var(--ease)}
+.dd-label{display:block;padding:8px 14px 4px;color:var(--ink3);font-family:ui-monospace,monospace;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase}
+.dropdown a{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:9px 14px;border-radius:8px;color:var(--ink);font-size:14.5px;line-height:1.4}
+.dropdown a:hover{background:rgba(224,123,42,.12);color:var(--accent);text-decoration:none}
+.dropdown a:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
+.dropdown a:active{transform:scale(.98)}
+.dd-count{color:var(--ink3);font-family:ui-monospace,monospace;font-size:11px}
+.dd-sep{height:1px;background:var(--rule);margin:6px 8px}
+.dd-flag{color:var(--ink3);font-size:13px}
 .tagline{color:var(--ink2);font-family:ui-monospace,monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase}
 .hero{padding:48px 0 20px}
 h1.hero-h{font-size:38px;font-weight:800;letter-spacing:-.03em;line-height:1.1;margin-bottom:8px}
@@ -50,16 +74,188 @@ article code{background:var(--card);border:1px solid var(--rule);border-radius:6
 .backto{border-top:1px solid var(--rule);padding:22px 0 60px}
 footer{border-top:1px solid var(--rule);padding:30px 0 60px;color:var(--ink3);font-size:14px}
 footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
-@media(max-width:640px){h1.hero-h{font-size:30px}article h1{font-size:28px}}
+@media(max-width:640px){h1.hero-h{font-size:30px}article h1{font-size:28px}
+nav{width:100%;justify-content:flex-start;overflow-x:auto;-webkit-overflow-scrolling:touch;padding-bottom:2px}
+.nav-link{margin-left:0;margin-right:18px;padding:10px 4px;font-size:14px;white-space:nowrap}
+.dropdown{position:static;box-shadow:none;min-width:0;margin-top:2px;display:none;transform:none;opacity:1;visibility:hidden;pointer-events:none}
+.nav-item.open .dropdown{display:block;visibility:visible;pointer-events:auto}
+.dropdown a{padding:10px 12px}}
 .skip-link{position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden;z-index:100;background:var(--accent);color:#fff;padding:8px 16px;border-radius:4px;font-size:14px}
-.skip-link:focus{left:16px;top:8px;width:auto;height:auto;overflow:visible}
+|.skip-link:focus{left:16px;top:8px;width:auto;height:auto;overflow:visible}
+|.search-wrap{position:relative;margin-left:18px;display:flex;align-items:center}
+|.search-wrap input{width:0;padding:0;border:0;border-radius:8px;background:transparent;color:var(--ink);font:inherit;transition:width .3s var(--ease),padding .3s var(--ease),border-color .3s var(--ease),background .3s var(--ease);outline:none;cursor:pointer}
+|.search-wrap input:focus,.search-wrap input.expanded{width:180px;padding:8px 12px 8px 34px;border:1px solid var(--rule);background:var(--card)}
+|.search-wrap input:focus{width:220px}
+|.search-btn{background:none;border:0;color:var(--ink2);cursor:pointer;padding:4px;margin-right:6px;display:flex;align-items:center;transition:color .18s var(--ease)}
+|.search-btn:hover{color:var(--ink)}
+|.search-results{position:absolute;top:100%;right:0;margin-top:8px;width:320px;max-height:360px;overflow-y:auto;background:var(--card);border:1px solid var(--rule);border-radius:12px;box-shadow:0 8px 24px rgba(0,0,0,.4);display:none;z-index:100}
+|.search-results.visible{display:block}
+|.search-results a{display:flex;flex-direction:column;padding:12px 16px;border-bottom:1px solid var(--rule);color:var(--ink);text-decoration:none;transition:background .15s var(--ease)}
+|.search-results a:last-child{border-bottom:none}
+|.search-results a:hover{background:rgba(224,123,42,.08)}
+|.search-results .sr-title{font-size:14px;font-weight:600;margin-bottom:2px}
+|.search-results .sr-date{font-size:11px;color:var(--ink3);font-family:ui-monospace,monospace}
+|.search-no-results{padding:16px;color:var(--ink3);font-size:14px;text-align:center}
+|.newsletter{background:var(--card);border:1px solid var(--rule);border-radius:14px;padding:24px 28px;margin:32px 0}
+|.newsletter h3{font-size:18px;margin-bottom:6px;color:var(--ink)}
+|.newsletter p{color:var(--ink2);font-size:14px;margin-bottom:14px}
+|.newsletter form{display:flex;gap:8px;flex-wrap:wrap}
+|.newsletter input[type="email"]{flex:1;min-width:180px;padding:10px 14px;border:1px solid var(--rule);border-radius:8px;background:var(--bg);color:var(--ink);font:inherit;font-size:14px;outline:none}
+|.newsletter input[type="email"]:focus{border-color:var(--accent)}
+|.newsletter button{padding:10px 20px;background:var(--accent);color:#fff;border:0;border-radius:8px;font:inherit;font-size:14px;font-weight:600;cursor:pointer;transition:opacity .18s var(--ease)}
+|.newsletter button:hover{opacity:.9}
+|.newsletter .nf-status{font-size:13px;margin-top:8px;min-height:20px}
+|.nf-success{color:var(--green)}
+|.nf-error{color:#d45656}
+|.toc-wrap{background:var(--card);border:1px solid var(--rule);border-radius:12px;padding:18px 22px;margin:0 0 32px}
+|.toc-toggle{background:none;border:0;color:var(--ink2);cursor:pointer;font:inherit;font-size:14px;display:flex;align-items:center;gap:6px;padding:4px 0;transition:color .18s var(--ease)}
+|.toc-toggle:hover{color:var(--ink)}
+|.toc-toggle .chev-sm{display:inline-block;transition:transform .2s var(--ease);font-size:12px}
+|.toc-toggle.open .chev-sm{transform:rotate(90deg)}
+|.toc-list{list-style:none;padding:8px 0 0 8px;display:none}
+|.toc-list.open{display:block}
+|.toc-list li{margin-bottom:4px}
+|.toc-list a{color:var(--ink2);font-size:14px;padding:4px 0 4px 12px;border-left:2px solid var(--rule);display:block;transition:color .18s var(--ease),border-color .18s var(--ease)}
+|.toc-list a:hover{color:var(--accent);border-color:var(--accent)}
+|.toc-list li.toc-h3 a{padding-left:28px;font-size:13px}
+|.social-links{display:flex;gap:16px;align-items:center}
+|.social-links a{color:var(--ink3);transition:color .18s var(--ease);display:flex;align-items:center}
+|.social-links a:hover{color:var(--accent)}
+|@media(max-width:640px){h1.hero-h{font-size:30px}article h1{font-size:28px}
+|.newsletter form{flex-direction:column}
+|.newsletter input[type="email"]{min-width:100%}
+|.newsletter button{width:100%}
+|.search-wrap input:focus,.search-wrap input.expanded{width:140px}
+|.search-wrap input:focus{width:160px}
+|.search-results{width:calc(100vw - 40px);right:-10px}
+|}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition-duration:.01ms!important}html{scroll-behavior:auto}}
+@media(prefers-reduced-transparency:reduce){header{background:var(--bg);-webkit-backdrop-filter:none;backdrop-filter:none}}
 </style></head><body>
 <a class="skip-link" href="#main-content">Skip to content</a>
-<header><div class="wrap"><a class="brand" href="/">SPARKSPHEAR<span>&nbsp;FIELD NOTES</span></a>
-<nav aria-label="Primary"><a href="/p/research">Research</a><a href="/p/industries-we-spark">Industries</a><a href="/p/what-is-the-sparksphear-team-about">About</a><a href="/p/what-does-the-sparksphear-team-about">Start Here</a></nav></div></header>
+<header id="site-header"><div class="wrap"><a class="brand" href="/">SPARKSPHEAR<span>&nbsp;FIELD NOTES</span></a>
+<nav aria-label="Primary"><a class="nav-link" href="/p/research">Research</a><div class="nav-item"><button class="nav-link" type="button" aria-expanded="false" aria-haspopup="true" aria-controls="industries-menu">Industries<span class="chev" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 3.5 5 6.5 8 3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button><div class="dropdown" id="industries-menu" role="menu" aria-label="Industries"><div class="dd-label">Industries</div><a role="menuitem" href="/p/industries-we-spark">All Industries</a><div class="dd-sep"></div><a role="menuitem" href="/p/industries-we-spark#barbershops-and-salons">Barbershop<span class="dd-count">9 guides</span></a><a role="menuitem" href="/p/caregiver-capacity-case-matching-agent">Home Health Care<span class="dd-flag">↗</span></a><a role="menuitem" href="/p/research">Research &amp; Evaluations</a></div></div><a class="nav-link" href="/p/what-is-the-sparksphear-team-about">About</a><a class="nav-link" href="/p/what-does-the-sparksphear-team-about">Start Here</a><div class="search-wrap"><button class="search-btn" type="button" aria-label="Search" title="Search"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></button><input type="search" id="search-input" placeholder="Search articles…" aria-label="Search"><div class="search-results" id="search-results"></div></div></nav></div></header>
 <main id="main-content" class="wrap">
 <div class="byline">Aug 10, 2026 · SPARKSPHEAR FIELD NOTES</div>
-<article><h1>Research at SPARKSPHEAR Field Notes</h1><p>Our research is organized around the decisions an owner has to make before a new system earns a place in the business.</p><p>We are less interested in collecting software names than in explaining fit. A product can be excellent and still be wrong for a particular team, workflow, budget, or growth stage.</p><h2>Comparisons</h2><p>Comparison articles place tools beside one another around a specific decision. We look at the use case, setup effort, integrations, reporting, pricing, limitations, and the business size each option fits.</p><p>A useful comparison should help you answer:</p><ul><li>Which option fits the way we work today?</li></ul><ul><li>Which limitations will matter six months from now?</li></ul><ul><li>What will the team have to change to use it well?</li></ul><h2>Software reviews</h2><p>A review explains what a product does, who it serves, where it fits, and where it may disappoint. We include limitations because a review that only praises a tool is not useful for a buying decision.</p><p>When information comes from a vendor, we treat it as a vendor claim. When we have first-hand experience or a documented project result, we identify that context.</p><h2>Pricing guides</h2><p>Pricing changes frequently, especially for software with add-ons, usage charges, processing fees, onboarding, or required hardware. Our pricing guides explain what to confirm before signing up.</p><p>Always verify current pricing directly with the vendor before making a purchase. Use our figures as research context, not as a substitute for a current quote.</p><h2>Automation playbooks</h2><p>Playbooks describe a workflow problem and the sequence of decisions needed to improve it. They may cover call intake, quoting, scheduling, follow-up, billing, reporting, or system handoffs.</p><p>The public article explains the approach. Detailed client-specific architecture and implementation plans belong in a private engagement with SPARKSPHEAR.</p><h2>Our standard for useful research</h2><p>We aim for:</p><ul><li>A clear search question</li></ul><ul><li>A direct answer near the beginning</li></ul><ul><li>Specific criteria instead of vague praise</li></ul><ul><li>Evidence for material claims</li></ul><ul><li>Honest limitations</li></ul><ul><li>Practical next steps</li></ul><ul><li>A clear distinction between an existing product and a custom build</li></ul><p>Some articles may contain partner links. Those links are labeled, and they do not change the criteria used to evaluate a tool.</p><h2>Continue reading</h2><p>Browse the <a href="/p/p/industries-we-spark">Industries We Cover</a> page to find research relevant to your business. If you have already identified a bottleneck and need help deciding what to build, <a href="https://sparkspheartechsolutions.com/contact">contact SPARKSPHEAR</a> for a fit conversation.</p></article>
+<div class="toc-wrap"><button class="toc-toggle" type="button" aria-expanded="false" aria-controls="toc-content"><span class="chev-sm" aria-hidden="true">▶</span> Table of Contents</button><ul class="toc-list" id="toc-content"><li class="toc-h2"><a href="#comparisons">Comparisons</a></li><li class="toc-h2"><a href="#software-reviews">Software reviews</a></li><li class="toc-h2"><a href="#pricing-guides">Pricing guides</a></li><li class="toc-h2"><a href="#automation-playbooks">Automation playbooks</a></li><li class="toc-h2"><a href="#our-standard-for-useful-research">Our standard for useful research</a></li><li class="toc-h2"><a href="#continue-reading">Continue reading</a></li></ul></div><article id="article-content"><h1 id="research-at-sparksphear-field-notes">Research at SPARKSPHEAR Field Notes</h1><p>Our research is organized around the decisions an owner has to make before a new system earns a place in the business.</p><p>We are less interested in collecting software names than in explaining fit. A product can be excellent and still be wrong for a particular team, workflow, budget, or growth stage.</p><h2 id="comparisons">Comparisons</h2><p>Comparison articles place tools beside one another around a specific decision. We look at the use case, setup effort, integrations, reporting, pricing, limitations, and the business size each option fits.</p><p>A useful comparison should help you answer:</p><ul><li>Which option fits the way we work today?</li></ul><ul><li>Which limitations will matter six months from now?</li></ul><ul><li>What will the team have to change to use it well?</li></ul><h2 id="software-reviews">Software reviews</h2><p>A review explains what a product does, who it serves, where it fits, and where it may disappoint. We include limitations because a review that only praises a tool is not useful for a buying decision.</p><p>When information comes from a vendor, we treat it as a vendor claim. When we have first-hand experience or a documented project result, we identify that context.</p><h2 id="pricing-guides">Pricing guides</h2><p>Pricing changes frequently, especially for software with add-ons, usage charges, processing fees, onboarding, or required hardware. Our pricing guides explain what to confirm before signing up.</p><p>Always verify current pricing directly with the vendor before making a purchase. Use our figures as research context, not as a substitute for a current quote.</p><h2 id="automation-playbooks">Automation playbooks</h2><p>Playbooks describe a workflow problem and the sequence of decisions needed to improve it. They may cover call intake, quoting, scheduling, follow-up, billing, reporting, or system handoffs.</p><p>The public article explains the approach. Detailed client-specific architecture and implementation plans belong in a private engagement with SPARKSPHEAR.</p><h2 id="our-standard-for-useful-research">Our standard for useful research</h2><p>We aim for:</p><ul><li>A clear search question</li></ul><ul><li>A direct answer near the beginning</li></ul><ul><li>Specific criteria instead of vague praise</li></ul><ul><li>Evidence for material claims</li></ul><ul><li>Honest limitations</li></ul><ul><li>Practical next steps</li></ul><ul><li>A clear distinction between an existing product and a custom build</li></ul><p>Some articles may contain partner links. Those links are labeled, and they do not change the criteria used to evaluate a tool.</p><h2 id="continue-reading">Continue reading</h2><p>Browse the <a href="/p/industries-we-spark">Industries We Cover</a> page to find research relevant to your business. If you have already identified a bottleneck and need help deciding what to build, <a href="https://sparkspheartechsolutions.com/contact">contact SPARKSPHEAR</a> for a fit conversation.</p></article>
+<section class="newsletter"><h3>Stay in the loop</h3><p>Get a weekly digest of the latest SPARKSPHEAR Field Notes. No spam, just insights.</p><form><input type="email" placeholder="you@example.com" aria-label="Your email" required><button type="submit">Subscribe</button></form><div class="nf-status"></div></section>
 <div class="backto"><a href="/">&larr; All Field Notes</a></div></main>
-<footer><div class="wrap"><div>Research the pain. Choose the tool. Build the system.</div><div>© 2026 SPARKSPHEAR TECH SOLUTIONS LLC</div></div></footer>
+<footer><div class="wrap"><div><div style="margin-bottom:8px">Research the pain. Choose the tool. Build the system.</div><div class="social-links"><a href="https://linkedin.com/company/sparksphear" target="_blank" rel="noopener noreferrer" title="LinkedIn" aria-label="LinkedIn"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M20.5 2h-17A1.5 1.5 0 002 3.5v17A1.5 1.5 0 003.5 22h17a1.5 1.5 0 001.5-1.5v-17A1.5 1.5 0 0020.5 2zM8 19H5v-9h3zM6.5 8.25A1.75 1.75 0 118.3 6.5a1.78 1.78 0 01-1.8 1.75zM19 19h-3v-4.74c0-1.42-.6-1.93-1.38-1.93A1.74 1.74 0 0013 14.19a.66.66 0 000 .14V19h-3v-9h2.9v1.3a3.11 3.11 0 012.7-1.4c1.55 0 3.36.86 3.36 3.66z"/></svg></a><a href="https://x.com/sparksphear" target="_blank" rel="noopener noreferrer" title="X (Twitter)" aria-label="X (Twitter)"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a><a href="https://youtube.com/@sparksphear" target="_blank" rel="noopener noreferrer" title="YouTube" aria-label="YouTube"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M23.5 6.2a3 3 0 00-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 00.5 6.2 31.4 31.4 0 000 12a31.4 31.4 0 00.5 5.8 3 3 0 002.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 002.1-2.1A31.4 31.4 0 0024 12a31.4 31.4 0 00-.5-5.8zM9.6 15.6V8.4l6.3 3.6-6.3 3.6z"/></svg></a></div></div><div>© 2026 SPARKSPHEAR TECH SOLUTIONS LLC</div></div></footer>
+<script>(function(){
+var header=document.getElementById('site-header');
+var onScroll=function(){header.classList.toggle('scrolled',window.scrollY>8)};
+window.addEventListener('scroll',onScroll,{passive:true});onScroll();
+var item=document.querySelector('.nav-item');if(!item)return;
+var btn=item.querySelector('button');var dd=item.querySelector('.dropdown');
+function setOpen(o){item.classList.toggle('open',o);btn.setAttribute('aria-expanded',o?'true':'false')}
+btn.addEventListener('click',function(e){e.stopPropagation();setOpen(btn.getAttribute('aria-expanded')!=='true')});
+if(window.matchMedia('(hover:hover) and (pointer:fine)').matches){
+ var t;item.addEventListener('mouseenter',function(){clearTimeout(t);setOpen(true)});
+ item.addEventListener('mouseleave',function(){t=setTimeout(function(){setOpen(false)},120)});}
+document.addEventListener('click',function(e){if(!item.contains(e.target))setOpen(false)});
+document.addEventListener('focusin',function(e){if(!item.contains(e.target))setOpen(false)});
+document.addEventListener('keydown',function(e){if(e.key==='Escape'&&item.classList.contains('open')){setOpen(false);btn.focus()}});
+dd.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){setOpen(false)})});
+var path=location.pathname;
+document.querySelectorAll('nav a.nav-link').forEach(function(a){var h=a.getAttribute('href').split('#')[0];if(h&&h===path)a.classList.add('active')});
+if(path.indexOf('/p/industries-we-spark')===0||path.indexOf('/p/caregiver-capacity-case-matching-agent')===0||/barbershop/.test(path)){btn.classList.add('active')}
+})();
+// Search functionality
+(function(){
+var input=document.getElementById('search-input');
+var results=document.getElementById('search-results');
+var searchBtn=document.querySelector('.search-btn');
+if(!input||!results)return;
+var postList=[{"slug":"caregiver-capacity-case-matching-agent","title":"Caregiver Capacity and Case-Matching AI Agent","date":"2026-09-30"},{"slug":"barbershop-cash-flow-recordkeeping-expenses","title":"How Barbers Can Track Cash Flow, Taxes, and Business Expenses","date":"2026-08-13"},{"slug":"barbershop-client-retention-prebooking-follow-up","title":"How to Improve Barbershop Client Retention: Prebooking and Follow-Up","date":"2026-08-13"},{"slug":"barbershop-front-desk-pos-inventory-checkout","title":"How to Improve Barbershop Front-Desk Operations: POS, Inventory, and Checkout","date":"2026-08-13"},{"slug":"barbershop-launch-planning-demographics-capital","title":"How to Plan a Barbershop Launch: Demographics, Space, and Capital","date":"2026-08-13"},{"slug":"barbershop-volume-trap-scheduling-burnout","title":"How to Escape the Barbershop Volume Trap: Scheduling and Pricing Without Burnout","date":"2026-08-13"},{"slug":"fix-barbershop-pricing-stagnation-capacity-costs","title":"How to Fix Barbershop Pricing Stagnation: Capacity, Costs, and Testing","date":"2026-08-13"},{"slug":"reduce-barbershop-wait-times-walk-ins-booking","title":"How to Reduce Barbershop Wait Times: Walk-Ins, Booking, and Capacity","date":"2026-08-13"},{"slug":"standardize-barbershop-client-experience-service-sops","title":"How to Standardize the Barbershop Client Experience: Consultations, Hygiene, and Service SOPs","date":"2026-08-13"},{"slug":"stop-discounting-barbershop-pricing-brand-plan","title":"How to Stop Discounting at Your Barbershop: A Practical Pricing and Brand Plan","date":"2026-08-13"},{"slug":"small-business-systems-starter-kit","title":"Small Business Systems Starter Kit: Automation Readiness & ROI Workbook","date":"2026-08-11"},{"slug":"industries-we-spark","title":"Industries We Cover","date":"2026-08-10"},{"slug":"research","title":"Research at SPARKSPHEAR Field Notes","date":"2026-08-10"},{"slug":"what-does-the-sparksphear-team-about","title":"Start Here: How SPARKSPHEAR Field Notes Works","date":"2026-08-10"},{"slug":"what-is-the-sparksphear-team-about","title":"About SPARKSPHEAR Field Notes","date":"2026-08-10"}];
+var debounceTimer=null;
+function showResults(list){
+if(!list.length){results.innerHTML='<div class="search-no-results">No articles found</div>';results.classList.add('visible');return;}
+results.innerHTML=list.map(p=>{
+var d=p.date?new Date(p.date+'T00:00:00Z').toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric',timeZone:'UTC'}):'';
+return'<a href="/p/'+p.slug+'"><span class="sr-title">'+p.title+'</span>'+(d?'<span class="sr-date">'+d+'</span>':'')+'</a>';
+}).join('');
+results.classList.add('visible');
+}
+function doSearch(q){
+if(!q||q.length<2){results.classList.remove('visible');results.innerHTML='';return;}
+var lower=q.toLowerCase();
+var matches=postList.filter(function(p){
+return p.title.toLowerCase().includes(lower)||('/p/'+p.slug).toLowerCase().includes(lower);
+});
+showResults(matches);
+}
+if(searchBtn)searchBtn.addEventListener('click',function(e){
+e.stopPropagation();
+input.classList.toggle('expanded');
+if(input.classList.contains('expanded')){input.focus();}else{input.value='';results.classList.remove('visible');results.innerHTML='';}
+});
+input.addEventListener('input',function(){
+clearTimeout(debounceTimer);
+debounceTimer=setTimeout(function(){doSearch(input.value.trim());},200);
+});
+input.addEventListener('focus',function(){
+if(input.value.trim().length>=2)input.classList.add('expanded');
+});
+document.addEventListener('click',function(e){
+if(!input.contains(e.target)&&!results.contains(e.target)&&!searchBtn.contains(e.target)){
+input.classList.remove('expanded');
+results.classList.remove('visible');
+}
+});
+document.addEventListener('keydown',function(e){
+if(e.key==='Escape'){
+input.classList.remove('expanded');
+results.classList.remove('visible');
+}
+});
+})();
+// TOC toggle
+(function(){
+var toggles=document.querySelectorAll('.toc-toggle');
+toggles.forEach(function(btn){
+var list=btn.nextElementSibling;
+if(!list)return;
+btn.addEventListener('click',function(e){
+e.preventDefault();
+var expanded=btn.getAttribute('aria-expanded')==='true';
+btn.setAttribute('aria-expanded',!expanded?'true':'false');
+list.classList.toggle('open');
+});
+});
+})();
+// Newsletter form handler
+(function(){
+var forms=document.querySelectorAll('.newsletter form');
+if(!forms.length)return;
+forms.forEach(function(form){
+form.addEventListener('submit',function(e){
+e.preventDefault();
+var email=form.querySelector('input[type="email"]');
+var btn=form.querySelector('button');
+var status=form.nextElementSibling;
+if(!email||!btn||!status)return;
+var emailVal=email.value.trim();
+if(!emailVal){status.textContent='Please enter your email.';status.className='nf-status nf-error';return;}
+btn.disabled=true;btn.textContent='Subscribing…';status.textContent='';
+try{
+fetch('https://api.sequenzy.com/newsletter/subscribe',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:emailVal,source:'sparksphear-field-notes'})}).then(function(resp){
+return resp.json();
+}).then(function(data){
+if(data.success||data.ok||data.subscribed||resp.ok){
+status.textContent='You're in! Check your inbox for a confirmation.';status.className='nf-status nf-success';
+email.value='';
+}else{
+status.textContent=data.message||'Something went wrong. Please try again.';status.className='nf-status nf-error';
+}
+}).catch(function(){
+status.textContent='Connection error. Please try again later.';status.className='nf-status nf-error';
+}).finally(function(){btn.disabled=false;btn.textContent='Subscribe';});
+}catch(err){
+status.textContent='Something went wrong. Please try again.';status.className='nf-status nf-error';
+btn.disabled=false;btn.textContent='Subscribe';
+}
+});
+});
+})();
+</script>
 </body></html>
