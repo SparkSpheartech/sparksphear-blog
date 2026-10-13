@@ -42,14 +42,33 @@ function inline(s){
   return s;
 }
 function md2html(md){
-  const lines = md.split('\n');
-  let html = '', inList = false, inOl = false;
-  const closeLists = ()=>{ if(inList){html+='</ul>';inList=false;} if(inOl){html+='</ol>';inOl=false;} };
-  for (let i=0;i<lines.length;i++){
-    let l = lines[i];
-    if (/^\s*$/.test(l)) { closeLists(); continue; }
-    let m;
-    if ((m = l.match(/^(#{1,4})\s+(.*)/))) { closeLists(); const lv=m[1].length; const hid=(lv<=3)?m[2].toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,''):''; html += `<h${lv}${hid?` id="${hid}"`:''}>${inline(m[2])}</h${lv}>`; continue; }
+ const lines = md.split('\n');
+ let html = '', inList = false, inOl = false, inCode = false, codeBuf = [];
+ const closeLists = ()=>{ if(inList){html+='</ul>';inList=false;} if(inOl){html+='</ol>';inOl=false;} };
+ for (let i=0;i<lines.length;i++){
+  let l = lines[i];
+  if (inCode) {
+   if (/^```\s*$/.test(l.trim())) { html += `<pre><code>${esc(codeBuf.join('\n'))}</code></pre>`; inCode=false; codeBuf=[]; }
+   else codeBuf.push(l);
+   continue;
+  }
+  if (/^```/.test(l.trim())) { closeLists(); inCode=true; codeBuf=[]; continue; }
+  if (/^\s*$/.test(l)) { closeLists(); continue; }
+  let m;
+  if ((m = l.match(/^!\[([^\]]*)\]\(([^)\s]+)[^)]*\)/))) { closeLists(); const src = /^https?:\//.test(m[2]) ? m[2] : '/' + m[2].replace(/^\.?\//,''); html += `<figure><img src="${esc(src)}" alt="${esc(m[1])}" loading="lazy" style="max-width:100%;border-radius:10px;border:1px solid var(--rule)"></figure>`; continue; }
+  if (l.trimStart().startsWith('|') && i+1<lines.length && /^\s*\|[\s:|-]+\|\s*$/.test(lines[i+1])) {
+   closeLists();
+   const cells = row => row.trim().replace(/^\||\|$/g,'').split('|').map(c=>c.trim());
+   let tbl = '<div style="overflow-x:auto"><table>';
+   tbl += '<thead><tr>' + cells(l).map(c=>`<th>${inline(c)}</th>`).join('') + '</tr></thead><tbody>';
+   i += 2;
+   while (i<lines.length && lines[i].trimStart().startsWith('|')) { tbl += '<tr>' + cells(lines[i]).map(c=>`<td>${inline(c)}</td>`).join('') + '</tr>'; i++; }
+   i--;
+   tbl += '</tbody></table></div>';
+   html += tbl;
+   continue;
+  }
+  if ((m = l.match(/^(#{1,4})\s+(.*)/))) { closeLists(); const lv=m[1].length; const hid=(lv<=3)?m[2].toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,''):''; html += `<h${lv}${hid?` id="${hid}"`:''}>${inline(m[2])}</h${lv}>`; continue; }
     if (/^>\s?/.test(l)) { closeLists(); html += `<blockquote><p>${inline(l.replace(/^>\s?/,''))}</p></blockquote>`; continue; }
     if (/^(-{3,}|\*{3,})$/.test(l.trim())) { closeLists(); html += '<hr>'; continue; }
     if ((m = l.match(/^\s*[-*]\s+(.*)/))) { closeLists(); if(!inList){html+='<ul>';inList=true;} html += `<li>${inline(m[1])}</li>`; continue; }
@@ -163,6 +182,13 @@ article ul,article ol{margin:0 0 20px 24px;color:var(--ink)}
 article li{margin-bottom:8px}
 article blockquote{border-left:3px solid var(--accent);color:var(--ink2);font-size:18px;font-style:italic;padding:4px 0 4px 20px;margin:0 0 22px}
 article code{background:var(--card);border:1px solid var(--rule);border-radius:6px;padding:.1em .4em;font-size:.88em}
+article pre{background:var(--card);border:1px solid var(--rule);border-radius:10px;padding:16px 18px;overflow-x:auto;margin:0 0 20px}
+article pre code{background:none;border:0;padding:0;font-size:13px;line-height:1.55;color:var(--ink2)}
+article table{border-collapse:collapse;width:100%;margin:0 0 20px;font-size:14.5px}
+article th,article td{border:1px solid var(--rule);padding:8px 12px;text-align:left;vertical-align:top}
+article th{background:var(--card);font-weight:700}
+article tr:nth-child(even) td{background:rgba(20,23,28,.5)}
+article figure{margin:0 0 24px}
 .byline{color:var(--ink3);font-family:ui-monospace,monospace;font-size:12px;letter-spacing:.08em;text-transform:uppercase;margin-bottom:8px}
 .backto{border-top:1px solid var(--rule);padding:22px 0 60px}
 footer{border-top:1px solid var(--rule);padding:30px 0 60px;color:var(--ink3);font-size:14px}
