@@ -65,25 +65,25 @@ jobs:
         run: |
           set -euo pipefail
           URL="${{ steps.dep.outputs.url }}"
-          DEPLOY_ID="${{ steps.dep.outputs.uid }}"
           echo "aliasing ${BLOG_DOMAIN} -> https://${URL}"
-          curl -sS -X POST "https://api.vercel.com/v2/aliases?teamId=${VERCEL_TEAM}" \
-            -H "Authorization: Bearer $VERCEL_TOKEN" \
-            -H "Content-Type: application/json" \
-            -d "{\"alias\":\"${BLOG_DOMAIN}\",\"deploymentId\":\"${DEPLOY_ID}\"}" \
-            -o /tmp/alias.json -w 'alias POST http %{http_code}\n'
-          head -c 300 /tmp/alias.json || true
+          npx --yes vercel@latest alias set "https://${URL}" "${BLOG_DOMAIN}" \
+            --token="$VERCEL_TOKEN" --yes
 
-      - name: Verify the domain serves the new build
+      - name: Verify the domain now points at this deployment
         run: |
           set -euo pipefail
+          WANT="${{ steps.dep.outputs.uid }}"
           for i in $(seq 1 12); do
-            BODY=$(curl -sS --max-time 20 "https://${BLOG_DOMAIN}/" || true)
-            if printf '%s' "$BODY" | grep -q '/api/newsletter'; then
-              echo "OK: ${BLOG_DOMAIN} is serving the current build"
+            GOT=$(curl -sS -H "Authorization: Bearer $VERCEL_TOKEN" \
+              "https://api.vercel.com/v4/aliases?teamId=${VERCEL_TEAM}&limit=100" \
+              | BLOG_DOMAIN="$BLOG_DOMAIN" python3 scripts/alias_target.py)
+            if [ "$GOT" = "$WANT" ]; then
+              echo "OK: ${BLOG_DOMAIN} -> ${GOT}"
+              curl -sS -o /dev/null -w 'live HTTP %{http_code}\n' --max-time 20 "https://${BLOG_DOMAIN}/"
               exit 0
             fi
-            echo "waiting for the domain to update (attempt $i)"
+            echo "attempt $i: alias is '${GOT:-<none>}', want '${WANT}'"
             sleep 10
           done
-          echo "::warning::${BLOG_DOMAIN} did not pick up the new build in time"
+          echo "::error::${BLOG_DOMAIN} did not move to the new deployment"
+          exit 1
