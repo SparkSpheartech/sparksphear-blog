@@ -67,7 +67,7 @@ jobs:
           URL="${{ steps.dep.outputs.url }}"
           echo "aliasing ${BLOG_DOMAIN} -> https://${URL}"
           npx --yes vercel@latest alias set "https://${URL}" "${BLOG_DOMAIN}" \
-            --token="$VERCEL_TOKEN" --yes
+            --token="$VERCEL_TOKEN" --non-interactive
 
       - name: Verify the domain now points at this deployment
         run: |
