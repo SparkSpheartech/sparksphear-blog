@@ -247,14 +247,17 @@ var emailVal=email.value.trim();
 if(!emailVal){status.textContent='Please enter your email.';status.className='nf-status nf-error';return;}
 btn.disabled=true;btn.textContent='Subscribing…';status.textContent='';
 try{
-fetch('https://api.sequenzy.com/newsletter/subscribe',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:emailVal,source:'sparksphear-field-notes'})}).then(function(resp){
+fetch('/api/newsletter',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({jsonrpc:'2.0',method:'call',params:{list_id:1,value:emailVal,subscription_type:'email'}})}).then(function(resp){
 return resp.json();
 }).then(function(data){
-if(data.success||data.ok||data.subscribed||resp.ok){
-status.textContent='You're in! Check your inbox for a confirmation.';status.className='nf-status nf-success';
+var result=(data&&data.result)||{};
+if(data&&data.error){
+status.textContent='Something went wrong. Please try again.';status.className='nf-status nf-error';
+}else if(result.toast_type==='success'){
+status.textContent='You're in! Check your inbox to confirm.';status.className='nf-status nf-success';
 email.value='';
 }else{
-status.textContent=data.message||'Something went wrong. Please try again.';status.className='nf-status nf-error';
+status.textContent=result.toast_content||'Something went wrong. Please try again.';status.className='nf-status nf-error';
 }
 }).catch(function(){
 status.textContent='Connection error. Please try again later.';status.className='nf-status nf-error';

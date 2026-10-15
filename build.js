@@ -21,8 +21,11 @@ const SOCIAL_LINKS = [
   { label: 'YouTube', url: 'https://youtube.com/@sparksphear', icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M23.5 6.2a3 3 0 00-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 00.5 6.2 31.4 31.4 0 000 12a31.4 31.4 0 00.5 5.8 3 3 0 002.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 002.1-2.1A31.4 31.4 0 0024 12a31.4 31.4 0 00-.5-5.8zM9.6 15.6V8.4l6.3 3.6-6.3 3.6z"/></svg>' }
 ];
 
-// Sequenzy newsletter endpoint
-const NEWSLETTER_ENDPOINT = 'https://api.sequenzy.com/newsletter/subscribe';
+// Newsletter endpoint: proxied same-origin by Vercel to Odoo's
+// /website_mass_mailing/subscribe (JSON-RPC). Keeps the browser same-origin
+// so no CORS is needed, and the Odoo list stays the single source of truth.
+const NEWSLETTER_ENDPOINT = '/api/newsletter';
+const NEWSLETTER_LIST_ID = 1;
 
 // Minimal markdown -> HTML (headings, paragraphs, lists, bold, links, code, blockquote, hr)
 function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
@@ -353,14 +356,17 @@ var emailVal=email.value.trim();
 if(!emailVal){status.textContent='Please enter your email.';status.className='nf-status nf-error';return;}
 btn.disabled=true;btn.textContent='Subscribing…';status.textContent='';
 try{
-fetch('${NEWSLETTER_ENDPOINT}',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:emailVal,source:'sparksphear-field-notes'})}).then(function(resp){
+fetch('${NEWSLETTER_ENDPOINT}',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({jsonrpc:'2.0',method:'call',params:{list_id:${NEWSLETTER_LIST_ID},value:emailVal,subscription_type:'email'}})}).then(function(resp){
 return resp.json();
 }).then(function(data){
-if(data.success||data.ok||data.subscribed||resp.ok){
-status.textContent='You\'re in! Check your inbox for a confirmation.';status.className='nf-status nf-success';
+var result=(data&&data.result)||{};
+if(data&&data.error){
+status.textContent='Something went wrong. Please try again.';status.className='nf-status nf-error';
+}else if(result.toast_type==='success'){
+status.textContent='You\'re in! Check your inbox to confirm.';status.className='nf-status nf-success';
 email.value='';
 }else{
-status.textContent=data.message||'Something went wrong. Please try again.';status.className='nf-status nf-error';
+status.textContent=result.toast_content||'Something went wrong. Please try again.';status.className='nf-status nf-error';
 }
 }).catch(function(){
 status.textContent='Connection error. Please try again later.';status.className='nf-status nf-error';

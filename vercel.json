@@ -8,6 +8,7 @@
     }
   ],
   "rewrites": [
+    { "source": "/api/newsletter", "destination": "https://odoo.sparkspheartechsolutions.com/website_mass_mailing/subscribe" },
     { "source": "/p/:slug", "destination": "/p/:slug.html" }
   ],
   "headers": [
