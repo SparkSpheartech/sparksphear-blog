@@ -1,0 +1,87 @@
+name: Point blog domain at production
+
+# blog.sparkspheartechsolutions.com is bound as a Vercel ALIAS pinned to one
+# immutable deployment, so a plain `git push` does not update the custom domain.
+# This workflow waits for the deployment Vercel creates for the pushed commit and
+# then re-points the alias at it.
+#
+# Required repository secret: VERCEL_TOKEN (Vercel -> Account Settings -> Tokens).
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: blog-alias
+  cancel-in-progress: false
+
+jobs:
+  point-alias:
+    runs-on: ubuntu-latest
+    env:
+      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+      VERCEL_TEAM: team_nV6dKdAYkyH0O0vcNb26TBV8
+      VERCEL_PROJECT: prj_DgSliTUcd7S4Mc8Yy87G8r8NFccE
+      BLOG_DOMAIN: blog.sparkspheartechsolutions.com
+    steps:
+      - name: Confirm token is present
+        run: |
+          if [ -z "$VERCEL_TOKEN" ]; then
+            echo "::error::VERCEL_TOKEN secret is not set. Add it in repo Settings > Secrets > Actions."
+            exit 1
+          fi
+
+      - name: Wait for the deployment of this commit
+        id: dep
+        run: |
+          set -euo pipefail
+          SHA="${{ github.sha }}"
+          URL="https://api.vercel.com/v6/deployments?projectId=${VERCEL_PROJECT}&teamId=${VERCEL_TEAM}&limit=20"
+          for i in $(seq 1 60); do
+            BODY=$(curl -sS -H "Authorization: Bearer $VERCEL_TOKEN" "$URL")
+            LINE=$(printf '%s' "$BODY" | SHA="$SHA" python3 scripts/find_deployment.py)
+            if [ -n "$LINE" ]; then
+              set -- $LINE
+              echo "found uid=$1 url=$2 state=$3"
+              case "$3" in
+                READY)
+                  echo "uid=$1" >> "$GITHUB_OUTPUT"
+                  echo "url=$2" >> "$GITHUB_OUTPUT"
+                  exit 0 ;;
+                ERROR|CANCELED) echo "::error::deployment $3"; exit 1 ;;
+              esac
+            else
+              echo "attempt $i: no deployment for $SHA yet"
+            fi
+            sleep 10
+          done
+          echo "::error::timed out waiting for the deployment"
+          exit 1
+
+      - name: Point the blog domain at it
+        run: |
+          set -euo pipefail
+          URL="${{ steps.dep.outputs.url }}"
+          DEPLOY_ID="${{ steps.dep.outputs.uid }}"
+          echo "aliasing ${BLOG_DOMAIN} -> https://${URL}"
+          curl -sS -X POST "https://api.vercel.com/v2/aliases?teamId=${VERCEL_TEAM}" \
+            -H "Authorization: Bearer $VERCEL_TOKEN" \
+            -H "Content-Type: application/json" \
+            -d "{\"alias\":\"${BLOG_DOMAIN}\",\"deploymentId\":\"${DEPLOY_ID}\"}" \
+            -o /tmp/alias.json -w 'alias POST http %{http_code}\n'
+          head -c 300 /tmp/alias.json || true
+
+      - name: Verify the domain serves the new build
+        run: |
+          set -euo pipefail
+          for i in $(seq 1 12); do
+            BODY=$(curl -sS --max-time 20 "https://${BLOG_DOMAIN}/" || true)
+            if printf '%s' "$BODY" | grep -q '/api/newsletter'; then
+              echo "OK: ${BLOG_DOMAIN} is serving the current build"
+              exit 0
+            fi
+            echo "waiting for the domain to update (attempt $i)"
+            sleep 10
+          done
+          echo "::warning::${BLOG_DOMAIN} did not pick up the new build in time"
