@@ -25,6 +25,8 @@ jobs:
       VERCEL_PROJECT: prj_DgSliTUcd7S4Mc8Yy87G8r8NFccE
       BLOG_DOMAIN: blog.sparkspheartechsolutions.com
     steps:
+      - uses: actions/checkout@v4
+
       - name: Confirm token is present
         run: |
           if [ -z "$VERCEL_TOKEN" ]; then
