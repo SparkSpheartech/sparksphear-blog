@@ -37,7 +37,7 @@ jobs:
           set -uo pipefail
           WANT=$(tr -d '\015' < public/index.html | sha256sum | cut -d' ' -f1)
           echo "expected public/index.html sha256: $WANT"
-          for i in $(seq 1 18); do
+          for i in $(seq 1 36); do
             GOT=$(curl -sS --max-time 20 "https://${BLOG_DOMAIN}/?cb=${GITHUB_SHA:0:8}-${i}" | tr -d '\015' | sha256sum | cut -d' ' -f1)
             if [ "$GOT" = "$WANT" ]; then
               echo "OK: ${BLOG_DOMAIN} is serving this commit"
@@ -56,19 +56,22 @@ jobs:
         run: |
           set -uo pipefail
           if [ -z "${VERCEL_TOKEN:-}" ]; then
-            echo "::error::The domain is stale and VERCEL_TOKEN is not set. Add it in repo Settings > Secrets and variables > Actions."
-            exit 1
+            echo "::warning::VERCEL_TOKEN is not set, so CI cannot re-point the alias. Add it in repo Settings > Secrets and variables > Actions."
+            echo "token_ok=false" >> "$GITHUB_OUTPUT"
+            exit 0
           fi
           CODE=$(curl -sS -o /dev/null -w '%{http_code}' -H "Authorization: Bearer ${VERCEL_TOKEN}" https://api.vercel.com/v2/user)
           echo "api.vercel.com/v2/user -> HTTP ${CODE}"
           if [ "$CODE" != "200" ]; then
-            echo "::error::VERCEL_TOKEN is rejected by Vercel (HTTP ${CODE}). Rotate it in Vercel > Settings > Tokens and update the repo secret."
-            exit 1
+            echo "::warning::VERCEL_TOKEN is rejected by Vercel (HTTP ${CODE}); CI cannot re-point the alias. Vercel normally moves the domain itself, so the final check below decides pass/fail. Rotate the token in Vercel > Settings > Tokens to restore the fallback."
+            echo "token_ok=false" >> "$GITHUB_OUTPUT"
+            exit 0
           fi
+          echo "token_ok=true" >> "$GITHUB_OUTPUT"
 
       - name: Wait for the deployment of this commit
         id: dep
-        if: steps.serve.outputs.served != 'true'
+        if: steps.serve.outputs.served != 'true' && steps.token.outputs.token_ok == 'true'
         run: |
           set -euo pipefail
           SHA="${GITHUB_SHA}"
@@ -95,7 +98,7 @@ jobs:
           exit 1
 
       - name: Point the blog domain at it
-        if: steps.serve.outputs.served != 'true'
+        if: steps.serve.outputs.served != 'true' && steps.token.outputs.token_ok == 'true'
         run: |
           set -euo pipefail
           URL="${{ steps.dep.outputs.url }}"
@@ -103,22 +106,19 @@ jobs:
           npx --yes vercel@latest alias set "https://${URL}" "${BLOG_DOMAIN}" \
             --token="$VERCEL_TOKEN" --non-interactive
 
-      - name: Verify the domain now points at this deployment
-        if: steps.serve.outputs.served != 'true'
+      - name: Final check - the domain must serve this commit
         run: |
-          set -euo pipefail
-          WANT="${{ steps.dep.outputs.uid }}"
-          for i in $(seq 1 12); do
-            GOT=$(curl -sS -H "Authorization: Bearer $VERCEL_TOKEN" \
-              "https://api.vercel.com/v4/aliases?teamId=${VERCEL_TEAM}&limit=100" \
-              | BLOG_DOMAIN="$BLOG_DOMAIN" python3 scripts/alias_target.py)
+          set -uo pipefail
+          WANT=$(tr -d '\015' < public/index.html | sha256sum | cut -d' ' -f1)
+          for i in $(seq 1 36); do
+            GOT=$(curl -sS --max-time 20 "https://${BLOG_DOMAIN}/?cb=final-${GITHUB_SHA:0:8}-${i}" | tr -d '\015' | sha256sum | cut -d' ' -f1)
             if [ "$GOT" = "$WANT" ]; then
-              echo "OK: ${BLOG_DOMAIN} -> ${GOT}"
+              echo "OK: ${BLOG_DOMAIN} serves ${GITHUB_SHA}"
               curl -sS -o /dev/null -w 'live HTTP %{http_code}\n' --max-time 20 "https://${BLOG_DOMAIN}/"
               exit 0
             fi
-            echo "attempt $i: alias is '${GOT:-<none>}', want '${WANT}'"
+            echo "attempt $i: live hash ${GOT} != ${WANT}"
             sleep 10
           done
-          echo "::error::${BLOG_DOMAIN} did not move to the new deployment"
+          echo "::error::${BLOG_DOMAIN} is not serving ${GITHUB_SHA}. CI could not re-point the alias (see warnings above). Check the Vercel deployment for this commit, then rotate VERCEL_TOKEN."
           exit 1
