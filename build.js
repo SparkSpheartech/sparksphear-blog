@@ -12,6 +12,7 @@ const DOMAIN = 'https://sparkspheartechsolutions.blog';
 const OG_IMAGE = DOMAIN + '/images/og-default.png';
 const GSC_VERIFICATION = '62419175358087346175'; // replace with real token from GSC
 const GA4_MEASUREMENT_ID = 'G-3G7GT1GM5K'; // SparkSphearTechSolutions GA4
+const META_PIXEL_ID = '2986453348391113'; // Meta (Facebook) Pixel
 const TITLE_MAX = 60;
 
 // Social media URLs for the blog
@@ -114,7 +115,19 @@ function layout(title, desc, body, slug='', extraHead='') {
   // GA4 snippet
   const ga4 = GA4_MEASUREMENT_ID ? `<script async src="https://www.googletagmanager.com/gtag/js?id=${GA4_MEASUREMENT_ID}"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${GA4_MEASUREMENT_ID}');</script>` : '';
-  // GSC verification
+  // Meta (Facebook) Pixel — PageView on every page
+const metaPixel = META_PIXEL_ID ? `<script>!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '${META_PIXEL_ID}');
+fbq('track', 'PageView');</script>
+<noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=${META_PIXEL_ID}&amp;ev=PageView&amp;noscript=1" alt=""></noscript>` : '';
+// GSC verification
   const gsc = GSC_VERIFICATION ? `<meta name="google-site-verification" content="${GSC_VERIFICATION}">` : '';
   return `<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>${esc(cTitle)}</title><meta name="description" content="${esc(desc||DESC)}">
@@ -128,7 +141,7 @@ function layout(title, desc, body, slug='', extraHead='') {
 ${articleMeta}
 <meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="${esc(cTitle)}">
 <meta name="twitter:description" content="${esc(desc||DESC)}"><meta name="twitter:image" content="${esc(OG_IMAGE)}">
-${gsc}${ga4}${extraHead}<style>
+${gsc}${ga4}${metaPixel}${extraHead}<style>
 :root{--bg:#0d0f12;--ink:#e8e6e0;--ink2:#a8a49b;--ink3:#6f6b63;--card:#14171c;--rule:#23272e;--accent:#e07b2a;--green:#4a9c6d;--ease:cubic-bezier(.23,1,.32,1)}
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth;scroll-padding-top:96px}
