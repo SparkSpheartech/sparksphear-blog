@@ -265,6 +265,8 @@ if(data&&data.error){
 status.textContent='Something went wrong. Please try again.';status.className='nf-status nf-error';
 }else if(result.toast_type==='success'){
 status.textContent='You're in! Check your inbox to confirm.';status.className='nf-status nf-success';
+if(typeof window.fbq==='function'){window.fbq('track','Lead',{content_name:'Newsletter Signup',content_category:'Blog'});}
+if(typeof window.gtag==='function'){window.gtag('event','generate_lead',{form_name:'newsletter'});}
 email.value='';
 }else{
 status.textContent=result.toast_content||'Something went wrong. Please try again.';status.className='nf-status nf-error';

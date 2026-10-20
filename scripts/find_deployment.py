@@ -18,8 +18,8 @@ try:
 except ValueError:
     sys.exit(0)
 
-for dep in payload.get("deployments", []):
+for dep in (payload if isinstance(payload, list) else (payload.get("deployments") or [])):
     meta = dep.get("meta") or {}
     if meta.get("githubCommitSha") == sha:
-        print(dep.get("uid", ""), dep.get("url", ""), dep.get("readyState", ""))
+        print(dep.get("uid") or dep.get("id") or "", dep.get("url", ""), dep.get("readyState") or dep.get("state") or "")
         break

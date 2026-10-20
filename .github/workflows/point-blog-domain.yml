@@ -1,11 +1,15 @@
-name: Point blog domain at production
+name: Verify blog domain serves production
 
-# blog.sparkspheartechsolutions.com is bound as a Vercel ALIAS pinned to one
-# immutable deployment, so a plain `git push` does not update the custom domain.
-# This workflow waits for the deployment Vercel creates for the pushed commit and
-# then re-points the alias at it.
+# The blog domain must serve the exact build committed to main. Vercel normally
+# moves the production domain onto the new deployment itself, but an alias pinned
+# to an older immutable deployment can leave the domain stale.
 #
-# Required repository secret: VERCEL_TOKEN (Vercel -> Account Settings -> Tokens).
+# This workflow verifies the live domain byte-for-byte against the pushed commit
+# and only re-points the alias when it actually lags. Verification needs no
+# secret, so a missing or rotated VERCEL_TOKEN can no longer turn a healthy deploy
+# into a red X.
+#
+# Optional repository secret: VERCEL_TOKEN (Vercel -> Account Settings -> Tokens).
 
 on:
   push:
@@ -27,20 +31,49 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Confirm token is present
+      - name: Verify the live domain serves this commit
+        id: serve
         run: |
-          if [ -z "$VERCEL_TOKEN" ]; then
-            echo "::error::VERCEL_TOKEN secret is not set. Add it in repo Settings > Secrets > Actions."
+          set -uo pipefail
+          WANT=$(tr -d '\015' < public/index.html | sha256sum | cut -d' ' -f1)
+          echo "expected public/index.html sha256: $WANT"
+          for i in $(seq 1 18); do
+            GOT=$(curl -sS --max-time 20 "https://${BLOG_DOMAIN}/?cb=${GITHUB_SHA:0:8}-${i}" | tr -d '\015' | sha256sum | cut -d' ' -f1)
+            if [ "$GOT" = "$WANT" ]; then
+              echo "OK: ${BLOG_DOMAIN} is serving this commit"
+              echo "served=true" >> "$GITHUB_OUTPUT"
+              exit 0
+            fi
+            echo "attempt $i: live hash ${GOT} != ${WANT}"
+            sleep 10
+          done
+          echo "served=false" >> "$GITHUB_OUTPUT"
+          echo "::warning::${BLOG_DOMAIN} is not serving ${GITHUB_SHA} yet - attempting to re-point the alias"
+
+      - name: Check the Vercel token
+        id: token
+        if: steps.serve.outputs.served != 'true'
+        run: |
+          set -uo pipefail
+          if [ -z "${VERCEL_TOKEN:-}" ]; then
+            echo "::error::The domain is stale and VERCEL_TOKEN is not set. Add it in repo Settings > Secrets and variables > Actions."
+            exit 1
+          fi
+          CODE=$(curl -sS -o /dev/null -w '%{http_code}' -H "Authorization: Bearer ${VERCEL_TOKEN}" https://api.vercel.com/v2/user)
+          echo "api.vercel.com/v2/user -> HTTP ${CODE}"
+          if [ "$CODE" != "200" ]; then
+            echo "::error::VERCEL_TOKEN is rejected by Vercel (HTTP ${CODE}). Rotate it in Vercel > Settings > Tokens and update the repo secret."
             exit 1
           fi
 
       - name: Wait for the deployment of this commit
         id: dep
+        if: steps.serve.outputs.served != 'true'
         run: |
           set -euo pipefail
-          SHA="${{ github.sha }}"
-          URL="https://api.vercel.com/v6/deployments?projectId=${VERCEL_PROJECT}&teamId=${VERCEL_TEAM}&limit=20"
-          for i in $(seq 1 60); do
+          SHA="${GITHUB_SHA}"
+          URL="https://api.vercel.com/v6/deployments?projectId=${VERCEL_PROJECT}&teamId=${VERCEL_TEAM}&limit=20&target=production"
+          for i in $(seq 1 30); do
             BODY=$(curl -sS -H "Authorization: Bearer $VERCEL_TOKEN" "$URL")
             LINE=$(printf '%s' "$BODY" | SHA="$SHA" python3 scripts/find_deployment.py)
             if [ -n "$LINE" ]; then
@@ -62,6 +95,7 @@ jobs:
           exit 1
 
       - name: Point the blog domain at it
+        if: steps.serve.outputs.served != 'true'
         run: |
           set -euo pipefail
           URL="${{ steps.dep.outputs.url }}"
@@ -70,6 +104,7 @@ jobs:
             --token="$VERCEL_TOKEN" --non-interactive
 
       - name: Verify the domain now points at this deployment
+        if: steps.serve.outputs.served != 'true'
         run: |
           set -euo pipefail
           WANT="${{ steps.dep.outputs.uid }}"
