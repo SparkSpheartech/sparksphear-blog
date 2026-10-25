@@ -1,15 +1,12 @@
 {
+  "framework": "nextjs",
   "trailingSlash": false,
   "redirects": [
-    {
-      "source": "/p/what-does-the-sparksphear-team-resarch",
-      "destination": "/p/what-does-the-sparksphear-team-about",
-      "statusCode": 308
-    }
+    { "source": "/p/what-does-the-sparksphear-team-resarch", "destination": "/p/what-does-the-sparksphear-team-about", "statusCode": 308 },
+    { "source": "/archives", "destination": "/#categories", "statusCode": 308 }
   ],
   "rewrites": [
-    { "source": "/api/newsletter", "destination": "https://odoo.sparkspheartechsolutions.com/website_mass_mailing/subscribe" },
-    { "source": "/p/:slug", "destination": "/p/:slug.html" }
+    { "source": "/api/newsletter", "destination": "https://odoo.sparkspheartechsolutions.com/website_mass_mailing/subscribe" }
   ],
   "headers": [
     {

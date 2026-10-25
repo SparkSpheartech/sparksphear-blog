@@ -1,0 +1,62 @@
+Home care agencies almost never lose revenue because not enough clients came in. They lose it because the clients already there cannot be served. The sales pipeline is fine. The schedule is not.
+
+Open shifts pile up faster than the office can cover them. A caregiver calls out at six in the morning. A new case needs a start date and nobody with the right certification is free that day. A client prefers a caregiver who speaks their language and the assignment keeps getting missed. Every one of those gaps is a shift that cannot be billed. For a mid-size agency, unstaffed shifts leave tens of thousands of dollars in billable revenue on the table every month, not because the demand is missing but because the matching is too slow and too manual.
+
+This is the problem a caregiver capacity and case-matching agent exists to solve.
+
+## The core idea: middleware, not another dashboard
+
+The agent does not replace your EHR or your scheduling software. It sits between your existing systems as an intelligent middleware layer connecting three things:
+
+1. Your EHR and scheduling platform, which knows the shifts, the cases, and the caregiver records
+2. A mapping service, which knows real drive times and distances
+3. A messaging gateway, which knows how to reach a caregiver on their phone in under a minute
+
+When an open shift appears, the agent reads the requirement, checks who can actually take it, contacts the right few people directly, and writes the result back into the schedule. The office staff stop being switchboard operators and start handling only the exceptions.
+
+## What the agent reads
+
+The matching is only as good as the inputs. The agent pulls three streams of data continuously.
+
+**Shift and case requirements from the EHR.** Client location and geocode, shift timing, required skills such as dementia care experience, hoyer lift certification, or memory care training, and client preferences like preferred caregiver gender, non-smoker, or language match.
+
+**Caregiver profile and state data from HR and the EHR.** Active certifications and licenses, the shift availability matrix, maximum weekly hour caps so unapproved overtime never happens, home address for drive-time math, and any client exclusion history that rules a pairing out.
+
+**Real-time GPS and EVV feeds.** Where active caregivers are right now, and exception triggers from electronic visit verification when a clock-in is late or a visit looks like a no-show.
+
+**Interactive inbound responses.** When a caregiver replies to a shift offer, the accept or decline comes back into the agent and drives the next action immediately.
+
+## What the agent does
+
+Four outbound actions do the heavy lifting.
+
+**Targeted shift broadcasts.** Instead of spamming the whole team with a blast text, the agent offers the shift to the top three to five qualified caregivers nearest the client, ranked by skills, drive time, and availability. Fewer messages, faster answers, no notification fatigue.
+
+**EHR auto-assignment.** The first qualified caregiver to claim the shift is written straight into the schedule and the shift is locked, which prevents double-booking and removes the race condition between two coordinators editing the same calendar.
+
+**Caregiver shift itinerary.** The confirmed caregiver gets shift details, client care plan summaries, and a direct navigation link so they leave on time with everything they need.
+
+**Margin and overtime safeguards.** Before an assignment is locked, the agent calculates the wage-to-rate spread and confirms it lands in the target 35 to 42 percent gross margin band. It respects weekly hour caps, so a convenient match never quietly pushes a caregiver into unapproved overtime.
+
+And when the loop fails, it escalates. If a shift is still unassigned 30 minutes before start, the supervisor or office scheduler gets an alert on the channel they actually watch, whether that is Slack, Teams, or SMS, with the shift details and the match attempts already tried.
+
+## The integrations behind it
+
+The agent connects through public APIs the agency already pays for.
+
+- **EHR and scheduling:** REST APIs such as Ankota, WellSky and ClearCare, AlayaCare, and HHAExchange, to read shift requirements and write schedule updates
+- **Messaging:** Twilio SMS for two-way shift claims, so a caregiver can reply YES to claim a shift from the lock screen, or native app push where an agency runs its own mobile app
+- **Mapping:** Google Maps Distance Matrix or Mapbox for live drive times, traffic, and mileage
+- **EVV:** the electronic visit verification feed, to catch late clock-ins and missed shifts the moment they happen instead of at payroll
+
+## The flow, end to end
+
+A shift opens in the EHR. The matching engine scores every caregiver against skills, GPS position, and drive time. The top three to five get an SMS offer. A caregiver replies YES. The EHR schedule updates and the shift locks. The caregiver gets their itinerary and navigation link. EVV confirms the clock-in.
+
+The entire cycle runs in minutes, without a coordinator touching the schedule, and every step is logged for review.
+
+## What it is worth
+
+The direct return is recovered billable hours: shifts that used to go uncovered now fill before the start time. The secondary returns compound: coordinators spend their day on exceptions instead of cold-calling a caregiver list, margin stops leaking on badly priced assignments, and overtime stops accruing on shifts that a closer, cheaper match could have covered.
+
+If your agency turns down cases you could have served, the constraint is not demand. It is matching speed. That is a systems problem, and systems problems are solvable.

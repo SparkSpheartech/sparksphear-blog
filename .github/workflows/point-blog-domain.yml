@@ -1,15 +1,7 @@
 name: Verify blog domain serves production
 
-# The blog domain must serve the exact build committed to main. Vercel normally
-# moves the production domain onto the new deployment itself, but an alias pinned
-# to an older immutable deployment can leave the domain stale.
-#
-# This workflow verifies the live domain byte-for-byte against the pushed commit
-# and only re-points the alias when it actually lags. Verification needs no
-# secret, so a missing or rotated VERCEL_TOKEN can no longer turn a healthy deploy
-# into a red X.
-#
-# Optional repository secret: VERCEL_TOKEN (Vercel -> Account Settings -> Tokens).
+# Next.js app: verify the live domain serves the new app (homepage renders the
+# brand and a post route answers). No secrets needed.
 
 on:
   push:
@@ -21,104 +13,28 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  point-alias:
+  verify:
     runs-on: ubuntu-latest
-    env:
-      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-      VERCEL_TEAM: team_nV6dKdAYkyH0O0vcNb26TBV8
-      VERCEL_PROJECT: prj_DgSliTUcd7S4Mc8Yy87G8r8NFccE
-      BLOG_DOMAIN: blog.sparkspheartechsolutions.com
+    strategy:
+      matrix:
+        domain: [sparkspheartechsolutions.blog, blog.sparkspheartechsolutions.com]
     steps:
-      - uses: actions/checkout@v4
-
-      - name: Verify the live domain serves this commit
-        id: serve
+      - name: Verify ${{ matrix.domain }} serves the app
         run: |
           set -uo pipefail
-          WANT=$(tr -d '\015' < public/index.html | sha256sum | cut -d' ' -f1)
-          echo "expected public/index.html sha256: $WANT"
           for i in $(seq 1 36); do
-            GOT=$(curl -sS --max-time 20 "https://${BLOG_DOMAIN}/?cb=${GITHUB_SHA:0:8}-${i}" | tr -d '\015' | sha256sum | cut -d' ' -f1)
-            if [ "$GOT" = "$WANT" ]; then
-              echo "OK: ${BLOG_DOMAIN} is serving this commit"
-              echo "served=true" >> "$GITHUB_OUTPUT"
-              exit 0
-            fi
-            echo "attempt $i: live hash ${GOT} != ${WANT}"
-            sleep 10
-          done
-          echo "served=false" >> "$GITHUB_OUTPUT"
-          echo "::warning::${BLOG_DOMAIN} is not serving ${GITHUB_SHA} yet - attempting to re-point the alias"
-
-      - name: Check the Vercel token
-        id: token
-        if: steps.serve.outputs.served != 'true'
-        run: |
-          set -uo pipefail
-          if [ -z "${VERCEL_TOKEN:-}" ]; then
-            echo "::warning::VERCEL_TOKEN is not set, so CI cannot re-point the alias. Add it in repo Settings > Secrets and variables > Actions."
-            echo "token_ok=false" >> "$GITHUB_OUTPUT"
-            exit 0
-          fi
-          CODE=$(curl -sS -o /dev/null -w '%{http_code}' -H "Authorization: Bearer ${VERCEL_TOKEN}" https://api.vercel.com/v2/user)
-          echo "api.vercel.com/v2/user -> HTTP ${CODE}"
-          if [ "$CODE" != "200" ]; then
-            echo "::warning::VERCEL_TOKEN is rejected by Vercel (HTTP ${CODE}); CI cannot re-point the alias. Vercel normally moves the domain itself, so the final check below decides pass/fail. Rotate the token in Vercel > Settings > Tokens to restore the fallback."
-            echo "token_ok=false" >> "$GITHUB_OUTPUT"
-            exit 0
-          fi
-          echo "token_ok=true" >> "$GITHUB_OUTPUT"
-
-      - name: Wait for the deployment of this commit
-        id: dep
-        if: steps.serve.outputs.served != 'true' && steps.token.outputs.token_ok == 'true'
-        run: |
-          set -euo pipefail
-          SHA="${GITHUB_SHA}"
-          URL="https://api.vercel.com/v6/deployments?projectId=${VERCEL_PROJECT}&teamId=${VERCEL_TEAM}&limit=20&target=production"
-          for i in $(seq 1 30); do
-            BODY=$(curl -sS -H "Authorization: Bearer $VERCEL_TOKEN" "$URL")
-            LINE=$(printf '%s' "$BODY" | SHA="$SHA" python3 scripts/find_deployment.py)
-            if [ -n "$LINE" ]; then
-              set -- $LINE
-              echo "found uid=$1 url=$2 state=$3"
-              case "$3" in
-                READY)
-                  echo "uid=$1" >> "$GITHUB_OUTPUT"
-                  echo "url=$2" >> "$GITHUB_OUTPUT"
-                  exit 0 ;;
-                ERROR|CANCELED) echo "::error::deployment $3"; exit 1 ;;
-              esac
+            HOME_CODE=$(curl -s -o /tmp/home.html -w '%{http_code}' --max-time 20 "https://${{ matrix.domain }}/?cb=${GITHUB_SHA:0:8}-${i}" || echo 000)
+            if [ "$HOME_CODE" = "200" ] && grep -q "SPARKSPHEAR" /tmp/home.html; then
+              POST_CODE=$(curl -s -o /dev/null -w '%{http_code}' --max-time 20 "https://${{ matrix.domain }}/p/x12-837-835-beginner-guide?cb=${GITHUB_SHA:0:8}")
+              if [ "$POST_CODE" = "200" ]; then
+                echo "OK: ${{ matrix.domain }} is serving this build"
+                exit 0
+              fi
+              echo "attempt $i: post route returned $POST_CODE"
             else
-              echo "attempt $i: no deployment for $SHA yet"
+              echo "attempt $i: homepage $HOME_CODE / brand not found"
             fi
             sleep 10
           done
-          echo "::error::timed out waiting for the deployment"
-          exit 1
-
-      - name: Point the blog domain at it
-        if: steps.serve.outputs.served != 'true' && steps.token.outputs.token_ok == 'true'
-        run: |
-          set -euo pipefail
-          URL="${{ steps.dep.outputs.url }}"
-          echo "aliasing ${BLOG_DOMAIN} -> https://${URL}"
-          npx --yes vercel@latest alias set "https://${URL}" "${BLOG_DOMAIN}" \
-            --token="$VERCEL_TOKEN" --non-interactive
-
-      - name: Final check - the domain must serve this commit
-        run: |
-          set -uo pipefail
-          WANT=$(tr -d '\015' < public/index.html | sha256sum | cut -d' ' -f1)
-          for i in $(seq 1 36); do
-            GOT=$(curl -sS --max-time 20 "https://${BLOG_DOMAIN}/?cb=final-${GITHUB_SHA:0:8}-${i}" | tr -d '\015' | sha256sum | cut -d' ' -f1)
-            if [ "$GOT" = "$WANT" ]; then
-              echo "OK: ${BLOG_DOMAIN} serves ${GITHUB_SHA}"
-              curl -sS -o /dev/null -w 'live HTTP %{http_code}\n' --max-time 20 "https://${BLOG_DOMAIN}/"
-              exit 0
-            fi
-            echo "attempt $i: live hash ${GOT} != ${WANT}"
-            sleep 10
-          done
-          echo "::error::${BLOG_DOMAIN} is not serving ${GITHUB_SHA}. CI could not re-point the alias (see warnings above). Check the Vercel deployment for this commit, then rotate VERCEL_TOKEN."
+          echo "::warning::${{ matrix.domain }} is not serving ${GITHUB_SHA} yet"
           exit 1

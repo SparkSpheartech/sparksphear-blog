@@ -1,0 +1,5 @@
+User-Agent: *
+Allow: /
+
+# Sitemap locations
+Sitemap: https://sparkspheartechsolutions.blog/sitemap.xml
