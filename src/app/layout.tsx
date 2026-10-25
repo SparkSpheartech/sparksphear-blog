@@ -55,7 +55,7 @@ export const metadata: Metadata = {
       { url: '/favicon/android-chrome-512x512.png', rel: 'icon', sizes: '512x512', type: 'image/png' }
     ]
   },
-  metadataBase: new URL(`${process.env.NEXT_PUBLIC_APP_URL ?? 'https://sparkspheartechsolutions.blog'}`),
+  metadataBase: new URL(`${process.env.NEXT_PUBLIC_APP_URL ?? 'https://blog.sparkspheartechsolutions.com'}`),
   openGraph: {
     title: {
       template: '%s | THE SPARK',
@@ -65,7 +65,7 @@ export const metadata: Metadata = {
       'THE SPARK by SPARKSPHEAR: practical systems, automation, and EDI/HIPAA guidance for barbershops, clinics, and small businesses.',
     type: 'website',
     siteName: 'THE SPARK',
-    url: `${process.env.NEXT_PUBLIC_APP_URL ?? 'https://sparkspheartechsolutions.blog'}`,
+    url: `${process.env.NEXT_PUBLIC_APP_URL ?? 'https://blog.sparkspheartechsolutions.com'}`,
     images: [
       {
         url: '/images/og-default.png',

@@ -3,6 +3,20 @@ import type { BlogPost } from '@/components/blocks/blog-component/blog-component
 // Posts shown in the home grid (categories: Barbershop Ai, EDI & HIPAA, Healthcare AI)
 export const blogPosts: BlogPost[] = [
   {
+    id: 5,
+    slug: 'small-business-systems-starter-kit',
+    title: "Small Business Systems Starter Kit: Automation Readiness & ROI Workbook",
+    description: "A practical workbook for mapping repetitive work, estimating workflow value, and choosing what to automate first.",
+    imageUrl: '/images/blog-post/post-6.webp',
+    imageAlt: "Small Business Systems Starter Kit: Automation Readiness & ROI Workbook",
+    date: 'August 11, 2026',
+    category: 'Systems & Automation',
+    author: 'SPARKSPHEAR Team',
+    avatarUrl: '/images/avatars/1.webp',
+    readTime: 2,
+    featured: false
+  },
+  {
     id: 6,
     slug: 'barbershop-cash-flow-recordkeeping-expenses',
     title: "How Barbers Can Track Cash Flow, Taxes, and Business Expenses",
@@ -140,7 +154,7 @@ export const blogPosts: BlogPost[] = [
     author: 'SPARKSPHEAR Team',
     avatarUrl: '/images/avatars/1.webp',
     readTime: 5,
-    featured: false
+    featured: true
   },
   {
     id: 16,
@@ -207,19 +221,6 @@ export const sitePages: BlogPost[] = [
     imageUrl: '/images/blog-post/post-5.webp',
     imageAlt: "About SPARKSPHEAR Field Notes",
     date: 'August 10, 2026',
-    author: 'SPARKSPHEAR Team',
-    avatarUrl: '/images/avatars/1.webp',
-    readTime: 2,
-    featured: false
-  },
-  {
-    id: 5,
-    slug: 'small-business-systems-starter-kit',
-    title: "Small Business Systems Starter Kit: Automation Readiness & ROI Workbook",
-    description: "A practical workbook for mapping repetitive work, estimating workflow value, and choosing what to automate first.",
-    imageUrl: '/images/blog-post/post-6.webp',
-    imageAlt: "Small Business Systems Starter Kit: Automation Readiness & ROI Workbook",
-    date: 'August 11, 2026',
     author: 'SPARKSPHEAR Team',
     avatarUrl: '/images/avatars/1.webp',
     readTime: 2,

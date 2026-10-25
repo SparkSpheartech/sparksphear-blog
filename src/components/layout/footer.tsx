@@ -15,7 +15,7 @@ const Footer = () => {
         </Link>
         <div className='flex flex-wrap items-center justify-center gap-x-3 gap-y-2 whitespace-nowrap sm:gap-5'>
           <Link
-            href='/p/what-does-the-sparksphear-team-about'
+            href='/p/what-is-the-sparksphear-team-about'
             className='text-muted-foreground hover:text-foreground opacity-80 transition-opacity duration-300 hover:opacity-100'
           >
             About
@@ -27,7 +27,7 @@ const Footer = () => {
             Contact
           </Link>
           <Link
-            href='https://sparkspheartechsolutions.com'
+            href='https://sparkspheartechsolutions.com?utm_source=blog&utm_medium=cta&utm_campaign=home-care'
             className='text-muted-foreground hover:text-foreground opacity-80 transition-opacity duration-300 hover:opacity-100'
           >
             sparkspheartechsolutions.com
@@ -41,7 +41,7 @@ const Footer = () => {
         <p className='flex items-center gap-1 text-center font-medium text-balance max-sm:flex-col'>
           <span>
             {`©${new Date().getFullYear()}`}{' '}
-            <Link href='/#' className='hover:underline'>
+            <Link href='https://sparkspheartechsolutions.com/contact?utm_source=blog&utm_medium=cta&utm_campaign=home-care' className='hover:underline'>
               SPARKSPHEAR TECH LLC.
             </Link>
           </span>

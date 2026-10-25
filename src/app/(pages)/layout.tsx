@@ -11,6 +11,10 @@ const navigationData: NavigationSection[] = [
     href: '/#home'
   },
   {
+    title: 'Home Care',
+    href: '/p/caregiver-capacity-case-matching-agent'
+  },
+  {
     title: 'Industries',
     href: '/p/industries-we-spark'
   },
@@ -19,12 +23,21 @@ const navigationData: NavigationSection[] = [
     href: '/tools'
   },
   {
+    title: 'Starter Kit',
+    href: '/p/small-business-systems-starter-kit'
+  },
+  {
+    title: 'Start Here',
+    href: '/p/what-does-the-sparksphear-team-about'
+  },
+  {
     title: 'About',
     items: [
-      { title: 'About Us', href: '/p/what-does-the-sparksphear-team-about' },
+      { title: 'About Us', href: '/p/what-is-the-sparksphear-team-about' },
       { title: 'Research', href: '/p/research' }
     ]
   }
+
 ]
 
 const PagesLayout = ({ children }: Readonly<{ children: ReactNode }>) => {

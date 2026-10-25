@@ -3,7 +3,7 @@ import type { MetadataRoute } from 'next'
 import { allPosts } from '@/assets/data/blog-posts'
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const base = process.env.NEXT_PUBLIC_APP_URL ?? 'https://sparkspheartechsolutions.blog'
+  const base = process.env.NEXT_PUBLIC_APP_URL ?? 'https://blog.sparkspheartechsolutions.com'
   const routes = ['', '/contact-us', '/tools']
 
   const posts = allPosts.map(post => ({

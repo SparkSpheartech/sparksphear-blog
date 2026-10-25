@@ -186,10 +186,10 @@ export default function ToolsClient() {
               <div className="space-y-4 pt-6 border-t border-border">
                 <div className="flex flex-col sm:flex-row gap-4">
                   <Link
-                    href="https://sparkspheartechsolutions.com/contact"
+                    href="https://sparkspheartechsolutions.com/contact?utm_source=blog&utm_medium=cta&utm_campaign=home-care"
                     className="flex-1 py-4 px-6 bg-primary text-primary-foreground rounded-xl font-extrabold text-center hover:opacity-90 transition-all shadow-lg shadow-primary/20 inline-flex items-center justify-center gap-2 text-base"
                   >
-                    Book a Fit Call <ArrowRight className="w-4 h-4" />
+                    Book a Free 15-Minute Fit Call <ArrowRight className="w-4 h-4" />
                   </Link>
                   <button
                     onClick={() => setIsModalOpen(true)}

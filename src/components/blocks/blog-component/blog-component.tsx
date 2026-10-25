@@ -106,6 +106,7 @@ const BlogGrid = ({ posts, onCategoryClick }: { posts: BlogPost[]; onCategoryCli
 
 const Blog = () => {
   const [selectedTab, setSelectedTab] = useState('All')
+ const [searchQuery, setSearchQuery] = useState('')
   const router = useRouter()
 
   // Get only the blog posts that have corresponding pages
@@ -114,6 +115,9 @@ const Blog = () => {
   // Filter out featured posts to avoid duplication with hero section
   // Sort posts by ID in descending order (newest first)
   const nonFeaturedPosts = availableBlogPosts.filter(post => !post.featured).sort((a, b) => b.id - a.id)
+ const visiblePosts = nonFeaturedPosts.filter(post =>
+ (post.title + ' ' + post.description + ' ' + (post.category ?? '')).toLowerCase().includes(searchQuery.toLowerCase())
+ )
 
   // Dynamically generate categories from the available data
   const uniqueCategories = [
@@ -192,14 +196,14 @@ const Blog = () => {
 
           {/* All Posts Tab */}
           <TabsContent value='All'>
-            <BlogGrid posts={nonFeaturedPosts} onCategoryClick={handleTabChange} />
+            <BlogGrid posts={visiblePosts} onCategoryClick={handleTabChange} />
           </TabsContent>
 
           {/* Category-specific Tabs */}
           {categories.slice(1).map((category, index) => (
             <TabsContent key={index} value={category}>
               <BlogGrid
-                posts={nonFeaturedPosts.filter(post => post.category === category)}
+                posts={visiblePosts.filter(post => post.category === category)}
                 onCategoryClick={handleTabChange}
               />
             </TabsContent>
