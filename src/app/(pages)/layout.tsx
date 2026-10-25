@@ -15,6 +15,10 @@ const navigationData: NavigationSection[] = [
     href: '/p/industries-we-spark'
   },
   {
+    title: 'Tools',
+    href: '/tools'
+  },
+  {
     title: 'About',
     items: [
       { title: 'About Us', href: '/p/what-does-the-sparksphear-team-about' },
