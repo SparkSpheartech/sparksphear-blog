@@ -1,12 +1,12 @@
 import type { MetadataRoute } from 'next'
 
-import { blogPosts } from '@/assets/data/blog-posts'
+import { allPosts } from '@/assets/data/blog-posts'
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const base = process.env.NEXT_PUBLIC_APP_URL ?? 'https://sparkspheartechsolutions.blog'
   const routes = ['', '/contact-us']
 
-  const posts = blogPosts.map(post => ({
+  const posts = allPosts.map(post => ({
     url: `${base}/p/${post.slug}`,
     lastModified: new Date()
   }))

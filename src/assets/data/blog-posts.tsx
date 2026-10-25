@@ -1,76 +1,7 @@
 import type { BlogPost } from '@/components/blocks/blog-component/blog-component'
 
+// Posts shown in the home grid (categories: Barbershop Ai, EDI & HIPAA, Healthcare AI)
 export const blogPosts: BlogPost[] = [
-  {
-    id: 1,
-    slug: 'industries-we-spark',
-    title: "Industries We Cover",
-    description: "Explore the business operations and software decisions we research across service, trade, care, hospitality, and local business teams.",
-    imageUrl: '/images/blog-post/post-2.webp',
-    imageAlt: "Industries We Cover",
-    date: 'August 10, 2026',
-    category: 'Industries',
-    author: 'SPARKSPHEAR Team',
-    avatarUrl: '/images/avatars/1.webp',
-    readTime: 2,
-    featured: false
-  },
-  {
-    id: 2,
-    slug: 'research',
-    title: "Research at SPARKSPHEAR Field Notes",
-    description: "How our comparison posts, software reviews, pricing guides, and automation playbooks help owners make better system decisions.",
-    imageUrl: '/images/blog-post/post-3.webp',
-    imageAlt: "Research at SPARKSPHEAR Field Notes",
-    date: 'August 10, 2026',
-    category: 'Research',
-    author: 'SPARKSPHEAR Team',
-    avatarUrl: '/images/avatars/1.webp',
-    readTime: 2,
-    featured: false
-  },
-  {
-    id: 3,
-    slug: 'what-does-the-sparksphear-team-about',
-    title: "Start Here: How SPARKSPHEAR Field Notes Works",
-    description: "A practical guide to our research, industries, tool evaluations, and the difference between choosing a system and building one.",
-    imageUrl: '/images/blog-post/post-4.webp',
-    imageAlt: "Start Here: How SPARKSPHEAR Field Notes Works",
-    date: 'August 10, 2026',
-    category: 'About',
-    author: 'SPARKSPHEAR Team',
-    avatarUrl: '/images/avatars/1.webp',
-    readTime: 2,
-    featured: false
-  },
-  {
-    id: 4,
-    slug: 'what-is-the-sparksphear-team-about',
-    title: "About SPARKSPHEAR Field Notes",
-    description: "Meet the research side of SPARKSPHEAR and learn how we connect practical software research with real implementation work.",
-    imageUrl: '/images/blog-post/post-5.webp',
-    imageAlt: "About SPARKSPHEAR Field Notes",
-    date: 'August 10, 2026',
-    category: 'About',
-    author: 'SPARKSPHEAR Team',
-    avatarUrl: '/images/avatars/1.webp',
-    readTime: 2,
-    featured: false
-  },
-  {
-    id: 5,
-    slug: 'small-business-systems-starter-kit',
-    title: "Small Business Systems Starter Kit: Automation Readiness & ROI Workbook",
-    description: "A practical workbook for mapping repetitive work, estimating workflow value, and choosing what to automate first.",
-    imageUrl: '/images/blog-post/post-6.webp',
-    imageAlt: "Small Business Systems Starter Kit: Automation Readiness & ROI Workbook",
-    date: 'August 11, 2026',
-    category: 'Systems & Automation',
-    author: 'SPARKSPHEAR Team',
-    avatarUrl: '/images/avatars/1.webp',
-    readTime: 2,
-    featured: false
-  },
   {
     id: 6,
     slug: 'barbershop-cash-flow-recordkeeping-expenses',
@@ -124,7 +55,7 @@ export const blogPosts: BlogPost[] = [
     category: 'Barbershop Ai',
     author: 'SPARKSPHEAR Team',
     avatarUrl: '/images/avatars/1.webp',
-    readTime: 11,
+    readTime: 12,
     featured: false
   },
   {
@@ -222,7 +153,79 @@ export const blogPosts: BlogPost[] = [
     category: 'EDI & HIPAA',
     author: 'SPARKSPHEAR Team',
     avatarUrl: '/images/avatars/1.webp',
-    readTime: 13,
+    readTime: 14,
     featured: true
   },
 ]
+
+// Standalone pages: live at /p/<slug>, linked from the menu, NOT in the grid
+export const sitePages: BlogPost[] = [
+  {
+    id: 1,
+    slug: 'industries-we-spark',
+    title: "Industries We Cover",
+    description: "Explore the business operations and software decisions we research across service, trade, care, hospitality, and local business teams.",
+    imageUrl: '/images/blog-post/post-2.webp',
+    imageAlt: "Industries We Cover",
+    date: 'August 10, 2026',
+    author: 'SPARKSPHEAR Team',
+    avatarUrl: '/images/avatars/1.webp',
+    readTime: 2,
+    featured: false
+  },
+  {
+    id: 2,
+    slug: 'research',
+    title: "Research at SPARKSPHEAR Field Notes",
+    description: "How our comparison posts, software reviews, pricing guides, and automation playbooks help owners make better system decisions.",
+    imageUrl: '/images/blog-post/post-3.webp',
+    imageAlt: "Research at SPARKSPHEAR Field Notes",
+    date: 'August 10, 2026',
+    author: 'SPARKSPHEAR Team',
+    avatarUrl: '/images/avatars/1.webp',
+    readTime: 2,
+    featured: false
+  },
+  {
+    id: 3,
+    slug: 'what-does-the-sparksphear-team-about',
+    title: "Start Here: How SPARKSPHEAR Field Notes Works",
+    description: "A practical guide to our research, industries, tool evaluations, and the difference between choosing a system and building one.",
+    imageUrl: '/images/blog-post/post-4.webp',
+    imageAlt: "Start Here: How SPARKSPHEAR Field Notes Works",
+    date: 'August 10, 2026',
+    author: 'SPARKSPHEAR Team',
+    avatarUrl: '/images/avatars/1.webp',
+    readTime: 2,
+    featured: false
+  },
+  {
+    id: 4,
+    slug: 'what-is-the-sparksphear-team-about',
+    title: "About SPARKSPHEAR Field Notes",
+    description: "Meet the research side of SPARKSPHEAR and learn how we connect practical software research with real implementation work.",
+    imageUrl: '/images/blog-post/post-5.webp',
+    imageAlt: "About SPARKSPHEAR Field Notes",
+    date: 'August 10, 2026',
+    author: 'SPARKSPHEAR Team',
+    avatarUrl: '/images/avatars/1.webp',
+    readTime: 2,
+    featured: false
+  },
+  {
+    id: 5,
+    slug: 'small-business-systems-starter-kit',
+    title: "Small Business Systems Starter Kit: Automation Readiness & ROI Workbook",
+    description: "A practical workbook for mapping repetitive work, estimating workflow value, and choosing what to automate first.",
+    imageUrl: '/images/blog-post/post-6.webp',
+    imageAlt: "Small Business Systems Starter Kit: Automation Readiness & ROI Workbook",
+    date: 'August 11, 2026',
+    author: 'SPARKSPHEAR Team',
+    avatarUrl: '/images/avatars/1.webp',
+    readTime: 2,
+    featured: false
+  },
+]
+
+// Everything that has a /p/<slug> route
+export const allPosts: BlogPost[] = [...blogPosts, ...sitePages]

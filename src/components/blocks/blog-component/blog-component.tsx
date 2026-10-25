@@ -33,7 +33,7 @@ export type BlogPost = {
   imageUrl: string
   imageAlt: string
   date: string
-  category: string
+  category?: string
   author: string
   avatarUrl: string
   readTime: number
@@ -78,8 +78,8 @@ const BlogGrid = ({ posts, onCategoryClick }: { posts: BlogPost[]; onCategoryCli
                 className='bg-primary/10 text-primary h-auto rounded-full border-0 text-sm'
                 onClick={e => {
                   e.stopPropagation()
-                  onCategoryClick(post.category)
-                  router.push(`/#category-${post.category}`)
+                  onCategoryClick(post.category ?? '')
+                  router.push(`/#category-${post.category ?? ''}`)
                 }}
               >
                 {post.category}
@@ -116,7 +116,9 @@ const Blog = () => {
   const nonFeaturedPosts = availableBlogPosts.filter(post => !post.featured).sort((a, b) => b.id - a.id)
 
   // Dynamically generate categories from the available data
-  const uniqueCategories = [...new Set(nonFeaturedPosts.map(post => post.category))]
+  const uniqueCategories = [
+    ...new Set(nonFeaturedPosts.map(post => post.category).filter((c): c is string => Boolean(c)))
+  ]
   const categories = ['All', ...uniqueCategories.sort()]
 
   const handleTabChange = (tab: string) => {

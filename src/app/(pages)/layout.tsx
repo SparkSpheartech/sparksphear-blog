@@ -11,12 +11,15 @@ const navigationData: NavigationSection[] = [
     href: '/#home'
   },
   {
-    title: 'Categories',
-    href: '/#categories'
+    title: 'Industries',
+    href: '/p/industries-we-spark'
   },
   {
     title: 'About',
-    href: '/p/what-does-the-sparksphear-team-about'
+    items: [
+      { title: 'About Us', href: '/p/what-does-the-sparksphear-team-about' },
+      { title: 'Research', href: '/p/research' }
+    ]
   }
 ]
 

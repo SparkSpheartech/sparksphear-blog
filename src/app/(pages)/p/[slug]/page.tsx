@@ -18,7 +18,7 @@ import {
 import { Separator } from '@/components/ui/separator'
 import { DynamicToc } from '@/components/table-of-contents/dynamic-toc'
 
-import { blogPosts } from '@/assets/data/blog-posts'
+import { allPosts, blogPosts } from '@/assets/data/blog-posts'
 
 const jsonLd = {
   '@context': 'https://schema.org',
@@ -38,7 +38,7 @@ const jsonLd = {
 
 // Generate static params for all blog posts
 export async function generateStaticParams() {
-  return blogPosts.map(post => ({
+  return allPosts.map(post => ({
     slug: post.slug
   }))
 }
@@ -93,7 +93,7 @@ const PostNavigation = ({ currentPost }: { currentPost: (typeof blogPosts)[0] })
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params
-  const post = blogPosts.find(p => p.slug === slug)
+  const post = allPosts.find(p => p.slug === slug)
   if (!post) return {}
   return {
     title: post.title,
@@ -109,7 +109,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 export default async function BlogDetailPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params
 
-  const post = blogPosts.find(p => p.slug === slug)
+  const post = allPosts.find(p => p.slug === slug)
 
   const { default: Post } = await import(`@/content/${slug}.mdx`)
 
@@ -118,7 +118,7 @@ export default async function BlogDetailPage({ params }: { params: Promise<{ slu
   }
 
   // Get related posts with same category first, then fill with other posts
-  const sameCategoryPosts = blogPosts.filter(p => p.category === post.category && p.slug !== post.slug)
+  const sameCategoryPosts = (post.category ? blogPosts : []).filter(p => p.category === post.category && p.slug !== post.slug)
   const otherPosts = blogPosts.filter(p => p.category !== post.category && p.slug !== post.slug)
 
   // Combine: same category posts first, then other posts, limit to 3
@@ -146,7 +146,7 @@ export default async function BlogDetailPage({ params }: { params: Promise<{ slu
                     </BreadcrumbItem>
                     <BreadcrumbSeparator />
                     <BreadcrumbItem>
-                      <BreadcrumbPage>{post.category}</BreadcrumbPage>
+                      <BreadcrumbPage>{post.category ?? 'THE SPARK'}</BreadcrumbPage>
                     </BreadcrumbItem>
                   </BreadcrumbList>
                 </Breadcrumb>
@@ -193,7 +193,7 @@ export default async function BlogDetailPage({ params }: { params: Promise<{ slu
                 <Post />
               </article>
 
-              <PostNavigation currentPost={post} />
+              {blogPosts.some(p => p.slug === post.slug) && <PostNavigation currentPost={post} />}
             </div>
           </div>
         </div>
