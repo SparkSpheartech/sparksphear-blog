@@ -29,11 +29,11 @@ const ibmPlexMono = IBM_Plex_Mono({
 
 export const metadata: Metadata = {
   title: {
-    template: '%s | SPARKSPHEAR FIELD NOTES',
-    default: 'SPARKSPHEAR FIELD NOTES - Systems & Automation for Small Business'
+    template: '%s | THE SPARK',
+    default: 'THE SPARK - Systems & Automation by SPARKSPHEAR'
   },
   description:
-    'Field notes from SPARKSPHEAR: practical systems, automation, and EDI/HIPAA guidance for barbershops, clinics, and small businesses.',
+    'THE SPARK by SPARKSPHEAR: practical systems, automation, and EDI/HIPAA guidance for barbershops, clinics, and small businesses.',
   robots: 'index,follow',
   keywords: [
     'small business systems',
@@ -58,31 +58,31 @@ export const metadata: Metadata = {
   metadataBase: new URL(`${process.env.NEXT_PUBLIC_APP_URL ?? 'https://sparkspheartechsolutions.blog'}`),
   openGraph: {
     title: {
-      template: '%s | SPARKSPHEAR FIELD NOTES',
-      default: 'SPARKSPHEAR FIELD NOTES - Systems & Automation for Small Business'
+      template: '%s | THE SPARK',
+      default: 'THE SPARK - Systems & Automation by SPARKSPHEAR'
     },
     description:
-      'Field notes from SPARKSPHEAR: practical systems, automation, and EDI/HIPAA guidance for barbershops, clinics, and small businesses.',
+      'THE SPARK by SPARKSPHEAR: practical systems, automation, and EDI/HIPAA guidance for barbershops, clinics, and small businesses.',
     type: 'website',
-    siteName: 'SPARKSPHEAR FIELD NOTES',
+    siteName: 'THE SPARK',
     url: `${process.env.NEXT_PUBLIC_APP_URL ?? 'https://sparkspheartechsolutions.blog'}`,
     images: [
       {
         url: '/images/og-default.png',
         width: 1200,
         height: 630,
-        alt: 'SPARKSPHEAR FIELD NOTES'
+        alt: 'THE SPARK - by SPARKSPHEAR'
       }
     ]
   },
   twitter: {
     card: 'summary_large_image',
     title: {
-      template: '%s | SPARKSPHEAR FIELD NOTES',
-      default: 'SPARKSPHEAR FIELD NOTES'
+      template: '%s | THE SPARK',
+      default: 'THE SPARK - Systems & Automation by SPARKSPHEAR'
     },
     description:
-      'Practical systems, automation, and EDI/HIPAA guidance for small businesses.'
+      'THE SPARK by SPARKSPHEAR: practical systems, automation, and EDI/HIPAA guidance for small businesses.'
   }
 }
 

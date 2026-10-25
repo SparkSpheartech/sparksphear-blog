@@ -7,7 +7,7 @@ const jsonLd = {
       '@context': 'https://schema.org',
       '@type': 'WebSite',
       '@id': `${process.env.NEXT_PUBLIC_APP_URL}#website`,
-      name: 'SPARKSPHEAR FIELD NOTES',
+      name: 'THE SPARK - by SPARKSPHEAR',
       description:
         'Ink is a free Shadcn UI Blog Landing Page template to publish articles, insights, and categories with a clean, fast, and readable layout.',
       url: `${process.env.NEXT_PUBLIC_APP_URL}`,

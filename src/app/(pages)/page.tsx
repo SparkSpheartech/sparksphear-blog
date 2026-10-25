@@ -11,9 +11,9 @@ const jsonLd = {
       '@context': 'https://schema.org',
       '@type': 'WebSite',
       '@id': `${process.env.NEXT_PUBLIC_APP_URL}#website`,
-      name: 'SPARKSPHEAR FIELD NOTES',
+      name: 'THE SPARK - by SPARKSPHEAR',
       description:
-        'Field notes from SPARKSPHEAR: practical systems, automation, and EDI/HIPAA guidance for small businesses.',
+        'THE SPARK by SPARKSPHEAR: practical systems, automation, and EDI/HIPAA guidance for small businesses.',
       url: `${process.env.NEXT_PUBLIC_APP_URL}`,
       inLanguage: 'en-US'
     }
