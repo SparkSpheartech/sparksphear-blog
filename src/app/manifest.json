@@ -1,7 +1,7 @@
 {
-  "name": "THE SPARK - by SPARKSPHEAR",
-  "short_name": "THE SPARK",
-  "description": "Practical systems, automation, and EDI/HIPAA guidance for small businesses.",
+  "name": "SPARKSPHEAR | Innovation Field Notes for Service-Based Businesses",
+  "short_name": "SPARKSPHEAR Field Notes",
+  "description": "AI-focused innovation field notes for service-business owners who know what AI is - and want to implement it. Real workflows, real numbers, by the team that builds them.",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",

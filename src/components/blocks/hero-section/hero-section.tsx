@@ -25,13 +25,13 @@ const HeroSection = ({ blogData }: { blogData: BlogPost[] }) => {
         {/* Hero Header */}
         <div className='flex max-w-4xl flex-col items-center gap-4 self-center text-center'>
           <Badge variant='outline' className='h-auto text-sm font-normal'>
-            SPARKSPHEAR - Home Health Care
+            SPARKSPHEAR - Innovation Field Notes
           </Badge>
           <h1 className='text-3xl leading-[1.29167] font-semibold text-balance sm:text-4xl lg:text-5xl'>
-            Field notes for home care owners.
+            Innovation field notes for service-based businesses.
           </h1>
           <p className='text-muted-foreground mx-auto max-w-2xl text-xl'>
-            Systems and automation notes for home care agencies - capacity, recruiting, intake, billing. Written from real work, not theory.
+            AI-focused innovation for owners who know what AI is - and want to implement it. Real workflows, real numbers, from a team that builds them.
           </p>
           <form
                 className='gap-3 py-1 max-sm:w-full max-sm:space-y-2 sm:flex sm:flex-row md:w-sm'

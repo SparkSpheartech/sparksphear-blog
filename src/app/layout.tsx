@@ -29,11 +29,11 @@ const ibmPlexMono = IBM_Plex_Mono({
 
 export const metadata: Metadata = {
   title: {
-    template: '%s | THE SPARK',
-    default: 'THE SPARK - Systems & Automation by SPARKSPHEAR'
+    template: '%s | SPARKSPHEAR Field Notes',
+    default: 'SPARKSPHEAR | Innovation Field Notes for Service-Based Businesses'
   },
   description:
-    'THE SPARK by SPARKSPHEAR: practical systems, automation, and EDI/HIPAA guidance for barbershops, clinics, and small businesses.',
+    'AI-focused innovation field notes for service-business owners who know what AI is - and want to implement it. Real workflows, real numbers, by the team that builds them.',
   robots: 'index,follow',
   keywords: [
     'small business systems',
@@ -58,31 +58,31 @@ export const metadata: Metadata = {
   metadataBase: new URL(`${process.env.NEXT_PUBLIC_APP_URL ?? 'https://blog.sparkspheartechsolutions.com'}`),
   openGraph: {
     title: {
-      template: '%s | THE SPARK',
-      default: 'THE SPARK - Systems & Automation by SPARKSPHEAR'
+      template: '%s | SPARKSPHEAR Field Notes',
+      default: 'SPARKSPHEAR | Innovation Field Notes for Service-Based Businesses'
     },
     description:
-      'THE SPARK by SPARKSPHEAR: practical systems, automation, and EDI/HIPAA guidance for barbershops, clinics, and small businesses.',
+      'AI-focused innovation field notes for service-business owners who know what AI is - and want to implement it. Real workflows, real numbers, by the team that builds them.',
     type: 'website',
-    siteName: 'THE SPARK',
+    siteName: 'SPARKSPHEAR',
     url: `${process.env.NEXT_PUBLIC_APP_URL ?? 'https://blog.sparkspheartechsolutions.com'}`,
     images: [
       {
         url: '/images/og-default.png',
         width: 1200,
         height: 630,
-        alt: 'THE SPARK - by SPARKSPHEAR'
+        alt: 'SPARKSPHEAR - Innovation Field Notes for Service-Based Businesses'
       }
     ]
   },
   twitter: {
     card: 'summary_large_image',
     title: {
-      template: '%s | THE SPARK',
-      default: 'THE SPARK - Systems & Automation by SPARKSPHEAR'
+      template: '%s | SPARKSPHEAR Field Notes',
+      default: 'SPARKSPHEAR | Innovation Field Notes for Service-Based Businesses'
     },
     description:
-      'THE SPARK by SPARKSPHEAR: practical systems, automation, and EDI/HIPAA guidance for small businesses.'
+      'AI-focused innovation field notes for service-business owners who know what AI is - and want to implement it. Real workflows, real numbers, by the team that builds them.'
   }
 }
 

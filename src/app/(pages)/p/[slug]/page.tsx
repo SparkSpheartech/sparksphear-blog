@@ -27,9 +27,9 @@ const jsonLd = {
       '@context': 'https://schema.org',
       '@type': 'WebSite',
       '@id': `${process.env.NEXT_PUBLIC_APP_URL}#website`,
-      name: 'THE SPARK - by SPARKSPHEAR',
+      name: 'SPARKSPHEAR Field Notes - by SPARKSPHEAR',
       description:
-        'THE SPARK by SPARKSPHEAR: practical systems, automation, and EDI/HIPAA guidance for small businesses.',
+        'SPARKSPHEAR Field Notes by SPARKSPHEAR: practical systems, automation, and EDI/HIPAA guidance for small businesses.',
       url: `${process.env.NEXT_PUBLIC_APP_URL}`,
       inLanguage: 'en-US'
     }
@@ -146,7 +146,7 @@ export default async function BlogDetailPage({ params }: { params: Promise<{ slu
                     </BreadcrumbItem>
                     <BreadcrumbSeparator />
                     <BreadcrumbItem>
-                      <BreadcrumbPage>{post.category ?? 'THE SPARK'}</BreadcrumbPage>
+                      <BreadcrumbPage>{post.category ?? 'SPARKSPHEAR Field Notes'}</BreadcrumbPage>
                     </BreadcrumbItem>
                   </BreadcrumbList>
                 </Breadcrumb>

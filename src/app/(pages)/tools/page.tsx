@@ -10,11 +10,11 @@ export const metadata: Metadata = {
     canonical: 'https://sparkspheartechsolutions.blog/tools'
   },
   openGraph: {
-    title: 'Workflow Opportunity Calculator | THE SPARK',
+    title: 'Workflow Opportunity Calculator | SPARKSPHEAR Field Notes',
     description:
       'Estimate the workflow opportunity, manual hours, and process improvements suitable for AI agent automation.',
     url: 'https://sparkspheartechsolutions.blog/tools',
-    siteName: 'THE SPARK',
+    siteName: 'SPARKSPHEAR Field Notes',
     images: [
       {
         url: '/brand/logo.png',

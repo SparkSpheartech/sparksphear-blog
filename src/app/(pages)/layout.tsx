@@ -11,12 +11,15 @@ const navigationData: NavigationSection[] = [
     href: '/#home'
   },
   {
-    title: 'Home Care',
-    href: '/p/caregiver-capacity-case-matching-agent'
+    title: 'Start Here',
+    href: '/p/what-does-the-sparksphear-team-about'
   },
   {
     title: 'Industries',
-    href: '/p/industries-we-spark'
+    items: [
+      { title: 'All Industries', href: '/p/industries-we-spark' },
+      { title: 'Home Health Care', href: '/p/caregiver-capacity-case-matching-agent' }
+    ]
   },
   {
     title: 'Tools',
@@ -25,10 +28,6 @@ const navigationData: NavigationSection[] = [
   {
     title: 'Starter Kit',
     href: '/p/small-business-systems-starter-kit'
-  },
-  {
-    title: 'Start Here',
-    href: '/p/what-does-the-sparksphear-team-about'
   },
   {
     title: 'About',
