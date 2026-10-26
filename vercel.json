@@ -11,6 +11,11 @@
       "source": "/archives",
       "destination": "/#categories",
       "statusCode": 308
+    },
+    {
+      "source": "/shop",
+      "destination": "https://odoo.sparkspheartechsolutions.com/shop",
+      "permanent": true
     }
   ],
   "rewrites": [
