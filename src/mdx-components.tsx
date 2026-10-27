@@ -8,18 +8,23 @@ import type { MDXComponents } from 'mdx/types'
 const components = {
  // Allows customizing built-in components, e.g. to add styling.
  a: ({ href, children }) => {
-  const isStoreCta = typeof href === 'string' && href.includes('odoo.sparkspheartechsolutions.com/shop')
-  if (isStoreCta) {
-   return (
-    <a
-     href={href}
-     className='bg-primary text-primary-foreground hover:bg-primary/90 focus-visible:ring-primary mt-2 inline-flex w-full items-center justify-center rounded-md px-6 py-3 text-base font-semibold shadow-md transition-colors focus-visible:ring-2 focus-visible:outline-none sm:w-auto'
-    >
-     {children}
-    </a>
-   )
-  }
-  return <a href={href}>{children}</a>
+ const isStoreCta = typeof href === 'string' && href.includes('odoo.sparkspheartechsolutions.com/shop')
+ const isBundle = typeof href === 'string' && href.includes('/shop/starter-kit-home-care-operations-kit-bundle')
+ if (isStoreCta) {
+ return (
+ <a
+ href={href}
+ className={
+ isBundle
+ ? 'border-primary text-primary hover:bg-primary/10 focus-visible:ring-primary mt-2 inline-flex w-full items-center justify-center rounded-md border-2 bg-transparent px-6 py-3 text-base font-semibold transition-colors focus-visible:ring-2 focus-visible:outline-none sm:w-auto'
+ : 'bg-primary text-primary-foreground hover:bg-primary/90 focus-visible:ring-primary mt-2 inline-flex min-w-[280px] w-full items-center justify-center rounded-md px-7 py-3.5 text-lg font-bold shadow-md transition-colors focus-visible:ring-2 focus-visible:outline-none sm:w-auto'
+ }
+ >
+ {children}
+ </a>
+ )
+ }
+ return <a href={href}>{children}</a>
  },
   h2: ({ children }) => <h2 className='text-foreground mt-16 mb-4 scroll-mt-20 text-2xl font-semibold'>{children}</h2>,
   h3: ({ children }) => <h3 className='text-foreground mb-4 scroll-mt-20 text-xl font-medium'>{children}</h3>,
