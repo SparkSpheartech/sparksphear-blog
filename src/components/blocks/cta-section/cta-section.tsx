@@ -29,13 +29,33 @@ const CTA = () => {
                   </h2>
                   <div>
                     <p className='text-muted-foreground mb-3 text-base'>
-                      Join 1,000,000+ subscribers receiving expert tips on earning more, investing smarter and living
-                      better, all in our free newsletter.
+                      Get SPARKSPHEAR Field Notes — workflow automation patterns for owner-led service
+                      businesses, from real client work.
                     </p>
                     {/* Email Form */}
-                    <form className='gap-3 py-1 max-sm:space-y-2 sm:flex sm:flex-row'>
+                    <form
+                      className='gap-3 py-1 max-sm:space-y-2 sm:flex sm:flex-row'
+                      onSubmit={async e => {
+                        e.preventDefault()
+                        const email = (e.currentTarget.elements.namedItem('email') as HTMLInputElement).value
+                        const btn = (e.currentTarget.querySelector('button') as HTMLButtonElement)
+                        btn.textContent = 'Subscribing...'
+                        try {
+                          await fetch('/api/newsletter', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ jsonrpc: '2.0', method: 'call', params: { list_id: 1, value: email, subscription_type: 'email' } })
+                          })
+                          btn.textContent = 'Subscribed!'
+                        } catch {
+                          btn.textContent = 'Try again'
+                        }
+                      }}
+                    >
                       <Input
                         type='email'
+                        name='email'
+                        required
                         placeholder='Your email'
                         className='bg-background input-lg flex-1 px-3 text-base'
                       />
