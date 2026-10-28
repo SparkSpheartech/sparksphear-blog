@@ -154,7 +154,7 @@ const sections: { title: string; body: React.ReactNode }[] = [
           contact us:
         </p>
         <p>
-          <strong>Email:</strong> team@sparkspheartechsolutions.com
+          <strong>Email:</strong> support@sparkspheartechsolutions.com
           <br />
           <strong>Phone:</strong> (260) 267-0641
           <br />
