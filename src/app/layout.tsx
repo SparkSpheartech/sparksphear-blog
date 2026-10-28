@@ -102,7 +102,9 @@ const RootLayout = ({ children }: Readonly<{ children: ReactNode }>) => {
         <ThemeProvider attribute='class' enableSystem={false} disableTransitionOnChange>
           <TooltipProvider>{children}</TooltipProvider>
         </ThemeProvider>
-        <Script src='https://www.googletagmanager.com/gtag/js?id=G-3G7GT1GM5K' strategy='afterInteractive' />
+        <Script src='https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4010689269399813'
+    crossOrigin='anonymous' strategy='afterInteractive' />
+  <Script src='https://www.googletagmanager.com/gtag/js?id=G-3G7GT1GM5K' strategy='afterInteractive' />
         <Script id='ga4' strategy='afterInteractive'>
           {`
             window.dataLayer = window.dataLayer || [];
