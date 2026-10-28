@@ -25,7 +25,13 @@ const Footer = () => {
             className='text-muted-foreground hover:text-foreground opacity-80 transition-opacity duration-300 hover:opacity-100'
           >
             Contact
-          </Link>
+            </Link>
+            <Link
+            href='/privacy'
+            className='text-muted-foreground hover:text-foreground opacity-80 transition-opacity duration-300 hover:opacity-100'
+            >
+            Privacy
+            </Link>
           <Link
             href='https://sparkspheartechsolutions.com?utm_source=blog&utm_medium=cta&utm_campaign=home-care'
             className='text-muted-foreground hover:text-foreground opacity-80 transition-opacity duration-300 hover:opacity-100'
